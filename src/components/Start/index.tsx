@@ -84,7 +84,7 @@ const Start: React.FC = () => {
                     <Input placeholder="Your name" />
                   </Form.Item>
                   <Form.Item>
-                    <BasicButton htmlType="submit" margin="0 0 0 25%" type="primary" width="50%">
+                    <BasicButton htmlType="submit" margin="5% 0 0 25%" type="primary" width="50%">
                       Create!
                     </BasicButton>
                   </Form.Item>
@@ -101,7 +101,7 @@ const Start: React.FC = () => {
                   {checkedValidRoom && !roomName ? (
                     <Form.Item
                       hasFeedback
-                      help="Room code is invalid, please try again"
+                      help="Room code invalid or room full"
                       name="roomName"
                       rules={[{ required: true, message: 'Please input the room code!' }]}
                       validateStatus="error"
@@ -114,7 +114,7 @@ const Start: React.FC = () => {
                     </Form.Item>
                   )}
                   <Form.Item>
-                    <BasicButton htmlType="submit" margin="0 0 0 25%" type="primary" width="50%">
+                    <BasicButton htmlType="submit" margin="5% 0 0 25%" type="primary" width="50%">
                       Join!
                     </BasicButton>
                   </Form.Item>

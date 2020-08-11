@@ -27,6 +27,7 @@ interface BasicCardProps extends CardProps, CommonProps {}
 
 export const BasicCard: React.FC<BasicCardProps> = styled(Card)<BasicCardProps>`
   margin: ${(props) => (props.margin ? props.margin : 'auto')};
+  padding: ${(props) => (props.padding ? props.padding : 'auto')};
 `;
 
 export const CenterContainer: React.FC = styled.div`
@@ -35,14 +36,30 @@ export const CenterContainer: React.FC = styled.div`
   justify-content: center;
 `;
 
-type HeaderProps = CommonProps;
+interface HeaderProps extends CommonProps {
+  readonly fontWeight?: string;
+}
 
 export const H1: React.FC<HeaderProps> = styled.h1<HeaderProps>`
   font-family: Open Sans;
+  font-weight: ${(props) => (props.fontWeight ? props.fontWeight : 'normal')};
   margin: ${(props) => (props.margin ? props.margin : 'auto')};
 `;
 
 export const H2: React.FC<HeaderProps> = styled.h2<HeaderProps>`
   font-family: Open Sans;
+  font-weight: ${(props) => (props.fontWeight ? props.fontWeight : 'normal')};
+  margin: ${(props) => (props.margin ? props.margin : 'auto')};
+`;
+
+export const H3: React.FC<HeaderProps> = styled.h3<HeaderProps>`
+  font-family: Open Sans;
+  font-weight: ${(props) => (props.fontWeight ? props.fontWeight : 'normal')};
+  margin: ${(props) => (props.margin ? props.margin : 'auto')};
+`;
+
+export const H4: React.FC<HeaderProps> = styled.h4<HeaderProps>`
+  font-family: Open Sans;
+  font-weight: ${(props) => (props.fontWeight ? props.fontWeight : 'normal')};
   margin: ${(props) => (props.margin ? props.margin : 'auto')};
 `;

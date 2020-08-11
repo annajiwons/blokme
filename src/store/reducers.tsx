@@ -1,15 +1,21 @@
+// Third Party
 import { combineReducers } from 'redux';
 
-import { copyPlayerMapWithUpdate } from '../functions';
+// Other
+import { INITIAL_BOARD } from './constants';
+import { copyPlayerMapWithAdd, copyPlayerMapWithRemove } from '../functions';
 import {
   ADD_PLAYER,
   CLEAR_ROOM_DATA,
+  REMOVE_PLAYER,
+  REQ_GAME_ACTION,
   REQ_ROOM_ACTION,
   RES_CHECK_ROOM,
   RES_CREATE_ROOM,
   RES_JOIN_ROOM,
   RESET_TRIED_JOIN,
   SET_PLAYER_NAME,
+  GameActionTypes,
   GameState,
   Player,
   RoomActionTypes,
@@ -18,22 +24,27 @@ import {
 
 // Game
 const GAME_INITIAL_STATE: GameState = {
+  board: INITIAL_BOARD,
   loading: false,
+  started: false,
+  turn: 1,
 };
 
-// const game = (state = GAME_INITIAL_STATE, action: RequestCreateRoomAction) => {
-//     switch (action.type) {
-//         default:
-//             return { ...state };
-//     }
-// };
+const game = (state = GAME_INITIAL_STATE, action: GameActionTypes) => {
+  switch (action.type) {
+    case REQ_GAME_ACTION:
+      return { ...state, loading: true };
+    default:
+      return { ...state };
+  }
+};
 
 // Room
 const ROOM_INITIAL_STATE: RoomState = {
   checkedValidRoom: false,
   loading: false,
   playerName: '',
-  playerId: null,
+  playerId: 0,
   players: new Map<number, Player>(),
   roomName: '',
 };
@@ -43,8 +54,7 @@ const room = (state = ROOM_INITIAL_STATE, action: RoomActionTypes) => {
     case ADD_PLAYER:
       return {
         ...state,
-        playerId: action.player.id,
-        players: copyPlayerMapWithUpdate(state.players, action.player.id, action.player),
+        players: copyPlayerMapWithAdd(state.players, action.player.id, action.player),
       };
     case CLEAR_ROOM_DATA:
       return {
@@ -55,6 +65,11 @@ const room = (state = ROOM_INITIAL_STATE, action: RoomActionTypes) => {
         players: new Map<number, Player>(),
         roomName: '',
       };
+    // case REMOVE_PLAYER:
+    //   return {
+    //     ...state,
+    //     players: copyPlayerMapWithRemove(state.players, action.player.id),
+    //   };
     case REQ_ROOM_ACTION:
       return { ...state, loading: true };
     case RES_CHECK_ROOM:
@@ -63,8 +78,8 @@ const room = (state = ROOM_INITIAL_STATE, action: RoomActionTypes) => {
       return {
         ...state,
         loading: false,
-        playerId: 0,
-        players: copyPlayerMapWithUpdate(state.players, 0, { id: 0, name: state.playerName }),
+        playerId: 1,
+        players: copyPlayerMapWithAdd(state.players, 1, { id: 1, name: state.playerName }),
         roomName: action.roomName,
       };
     case RES_JOIN_ROOM:
@@ -72,7 +87,7 @@ const room = (state = ROOM_INITIAL_STATE, action: RoomActionTypes) => {
         ...state,
         loading: false,
         playerId: action.player.id,
-        players: copyPlayerMapWithUpdate(state.players, action.player.id, action.player),
+        players: copyPlayerMapWithAdd(state.players, action.player.id, action.player),
         roomName: action.roomName,
       };
     case RESET_TRIED_JOIN:
@@ -90,7 +105,7 @@ const room = (state = ROOM_INITIAL_STATE, action: RoomActionTypes) => {
 
 // Root
 export const rootReducer = combineReducers({
-  // game,
+  game,
   room,
 });
 

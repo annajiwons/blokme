@@ -3,7 +3,7 @@ import React from 'react';
 
 // Components
 import { Route, Switch } from 'react-router-dom';
-import Lobby from '../Lobby';
+import Game from '../Game';
 import Start from '../Start';
 
 const Main: React.FC = () => {
@@ -11,7 +11,7 @@ const Main: React.FC = () => {
     <>
       <Switch>
         <Route component={Start} exact path="/" />
-        <Route component={Lobby} path="/:roomName" />
+        <Route component={Game} path="/:roomName" />
       </Switch>
     </>
   );
