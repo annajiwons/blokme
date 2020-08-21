@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 // Components
-import { BasicButton, CenterContainer, H1 } from '../Visual/AppStyles';
-import { Card, Col, Divider, Form, Input, Row, Space } from 'antd';
+import { BasicButton, BasicCard, CenterContainer, H1 } from '../Visual/AppStyles';
+import { Col, Divider, Form, Input, Row, Space } from 'antd';
 import { Redirect } from 'react-router-dom';
 
 // Other
@@ -49,7 +49,7 @@ const Start: React.FC = () => {
   return (
     <>
       <CenterContainer>
-        <Card>
+        <BasicCard>
           <Space direction="vertical">
             <Row justify="center">
               <H1>blokme</H1>
@@ -122,7 +122,7 @@ const Start: React.FC = () => {
               </>
             )}
           </Space>
-        </Card>
+        </BasicCard>
       </CenterContainer>
     </>
   );

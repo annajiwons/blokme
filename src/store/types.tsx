@@ -82,17 +82,18 @@ export type RoomActionTypes =
 
 export const REQ_GAME_ACTION = 'REQ_GAME_ACTION';
 
-export const START_GAME = 'START_GAME';
+export const RES_START_GAME = 'START_GAME';
 
 interface RequestGameAction {
   type: typeof REQ_GAME_ACTION;
 }
 
-interface StartGameAction {
-  type: typeof START_GAME;
+interface ResultStartGameAction {
+  started: boolean;
+  type: typeof RES_START_GAME;
 }
 
-export type GameActionTypes = RequestGameAction | StartGameAction;
+export type GameActionTypes = RequestGameAction | ResultStartGameAction;
 
 /* 
   STATE TYPES
@@ -116,8 +117,9 @@ export interface RoomState {
 
 // Game
 export interface GameState {
-  board: string;
+  board: number[][];
   loading: boolean;
+  pieces: string[];
   started: boolean;
   turn: number; // The current player's id
 }

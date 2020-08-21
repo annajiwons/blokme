@@ -3,7 +3,8 @@ import { db } from '../firebase';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
 // Other
-import { INITIAL_BOARD, MAX_PLAYERS } from './constants';
+import { INITIAL_BOARD, MAX_PLAYERS } from '../logic/constants';
+import { matrixToString } from '../logic/gamelogic';
 import { generateRoomName, getUnusedPlayerId } from '../functions';
 import {
   ADD_PLAYER,
@@ -14,6 +15,7 @@ import {
   RES_CHECK_ROOM,
   RES_CREATE_ROOM,
   RES_JOIN_ROOM,
+  RES_START_GAME,
   RESET_TRIED_JOIN,
   SET_PLAYER_NAME,
   GameActionTypes,
@@ -192,7 +194,8 @@ export const joinRoomResult = (player: Player, roomName: string): RoomActionType
 export const startGame = (roomName: string): ThunkAction<void, GameState, unknown, GameActionTypes> => {
   return async (dispatch: ThunkDispatch<GameState, unknown, GameActionTypes>): Promise<void> => {
     dispatch(requestGameAction());
-    await db.ref('rooms/' + roomName).update({ board: INITIAL_BOARD, started: true, turn: 1 });
+    await db.ref('rooms/' + roomName).update({ board: matrixToString(INITIAL_BOARD), started: true, turn: 1 });
+    dispatch(startGameResult(true));
   };
 };
 
@@ -203,5 +206,12 @@ export const startGame = (roomName: string): ThunkAction<void, GameState, unknow
 export const requestGameAction = (): GameActionTypes => {
   return {
     type: REQ_GAME_ACTION,
+  };
+};
+
+export const startGameResult = (started: boolean): GameActionTypes => {
+  return {
+    started: started,
+    type: RES_START_GAME,
   };
 };

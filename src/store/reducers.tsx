@@ -2,7 +2,7 @@
 import { combineReducers } from 'redux';
 
 // Other
-import { INITIAL_BOARD } from './constants';
+import { INITIAL_BOARD, INIIAL_PIECES } from '../logic/constants';
 import { copyPlayerMapWithAdd, copyPlayerMapWithRemove } from '../functions';
 import {
   ADD_PLAYER,
@@ -13,6 +13,7 @@ import {
   RES_CHECK_ROOM,
   RES_CREATE_ROOM,
   RES_JOIN_ROOM,
+  RES_START_GAME,
   RESET_TRIED_JOIN,
   SET_PLAYER_NAME,
   GameActionTypes,
@@ -26,6 +27,7 @@ import {
 const GAME_INITIAL_STATE: GameState = {
   board: INITIAL_BOARD,
   loading: false,
+  pieces: INIIAL_PIECES,
   started: false,
   turn: 1,
 };
@@ -34,6 +36,8 @@ const game = (state = GAME_INITIAL_STATE, action: GameActionTypes) => {
   switch (action.type) {
     case REQ_GAME_ACTION:
       return { ...state, loading: true };
+    case RES_START_GAME:
+      return { ...state, loading: false, started: action.started };
     default:
       return { ...state };
   }

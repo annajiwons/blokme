@@ -3,8 +3,9 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 // Components
-import { BasicButton, BasicCard, CenterContainer, H1, H2, H3, H4 } from '../Visual/AppStyles';
-import { Card, Col, Divider, Row, Space } from 'antd';
+import { BasicButton, BasicCard, CenterContainer, H2 } from '../Visual/AppStyles';
+import { Divider, Row } from 'antd';
+import PlayersList from './PlayersList';
 
 // Other
 import { startGame } from '../../store/actions';
@@ -31,29 +32,22 @@ const Lobby: React.FC<LobbyProps> = ({ players, roomName }) => {
   return (
     <>
       <CenterContainer>
-        <BasicCard padding="20px">
-          <Space direction="vertical">
-            <Row justify="center">
-              <H3>Room Code:</H3>
-            </Row>
-            <Row justify="center">
-              <H2 fontWeight="bold">{roomName}</H2>
-            </Row>
-            <Divider />
-            {renderPlayers()}
-            <Row justify="center">
-              <BasicButton
-                disabled={players.size != 2 && players.size != 4}
-                margin="20% 0 0 0"
-                onClick={() => {
-                  dispatch(startGame(roomName));
-                }}
-                type="primary"
-              >
-                Start!
-              </BasicButton>
-            </Row>
-          </Space>
+        <BasicCard bordered={false}>
+          <Row justify="center">
+            <PlayersList players={players} roomName={roomName} />
+          </Row>
+          <Divider />
+          <Row justify="center">
+            <BasicButton
+              disabled={players.size != 2 && players.size != 4}
+              onClick={() => {
+                dispatch(startGame(roomName));
+              }}
+              type="primary"
+            >
+              Start!
+            </BasicButton>{' '}
+          </Row>
         </BasicCard>
       </CenterContainer>
     </>
