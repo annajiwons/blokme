@@ -3,7 +3,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 // Components
-import { BasicButton, BasicCard, CenterContainer, H2 } from '../Visual/AppStyles';
+import { AntButton, AntCard, CenterContainer, H2 } from '../Visual/AppStyles';
 import { Divider, Row } from 'antd';
 import PlayersList from './PlayersList';
 
@@ -32,13 +32,13 @@ const Lobby: React.FC<LobbyProps> = ({ players, roomName }) => {
   return (
     <>
       <CenterContainer>
-        <BasicCard bordered={false}>
+        <AntCard bordered={false}>
           <Row justify="center">
             <PlayersList players={players} roomName={roomName} />
           </Row>
           <Divider />
           <Row justify="center">
-            <BasicButton
+            <AntButton
               disabled={players.size != 2 && players.size != 4}
               onClick={() => {
                 dispatch(startGame(roomName));
@@ -46,9 +46,9 @@ const Lobby: React.FC<LobbyProps> = ({ players, roomName }) => {
               type="primary"
             >
               Start!
-            </BasicButton>{' '}
+            </AntButton>{' '}
           </Row>
-        </BasicCard>
+        </AntCard>
       </CenterContainer>
     </>
   );

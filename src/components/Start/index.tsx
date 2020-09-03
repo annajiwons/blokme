@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 // Components
-import { BasicButton, BasicCard, CenterContainer, H1 } from '../Visual/AppStyles';
+import { AntButton, AntCard, CenterContainer, H1 } from '../Visual/AppStyles';
 import { Col, Divider, Form, Input, Row, Space } from 'antd';
 import { Redirect } from 'react-router-dom';
 
@@ -49,31 +49,31 @@ const Start: React.FC = () => {
   return (
     <>
       <CenterContainer>
-        <BasicCard>
+        <AntCard>
           <Space direction="vertical">
             <Row justify="center">
               <H1>blokme</H1>
             </Row>
             <Row gutter={16} justify="center">
               <Col>
-                <BasicButton
+                <AntButton
                   onClick={() => {
                     setJoinRoom(false);
                     setCreateRoom(!isCreateRoom);
                   }}
                 >
                   Create a game
-                </BasicButton>
+                </AntButton>
               </Col>
               <Col>
-                <BasicButton
+                <AntButton
                   onClick={() => {
                     setCreateRoom(false);
                     setJoinRoom(!isJoinRoom);
                   }}
                 >
                   Join a game
-                </BasicButton>
+                </AntButton>
               </Col>
             </Row>
             {isCreateRoom && (
@@ -84,9 +84,9 @@ const Start: React.FC = () => {
                     <Input placeholder="Your name" />
                   </Form.Item>
                   <Form.Item>
-                    <BasicButton htmlType="submit" margin="5% 0 0 25%" type="primary" width="50%">
+                    <AntButton htmlType="submit" margin="5% 0 0 25%" type="primary" width="50%">
                       Create!
-                    </BasicButton>
+                    </AntButton>
                   </Form.Item>
                 </Form>
               </>
@@ -114,15 +114,15 @@ const Start: React.FC = () => {
                     </Form.Item>
                   )}
                   <Form.Item>
-                    <BasicButton htmlType="submit" margin="5% 0 0 25%" type="primary" width="50%">
+                    <AntButton htmlType="submit" margin="5% 0 0 25%" type="primary" width="50%">
                       Join!
-                    </BasicButton>
+                    </AntButton>
                   </Form.Item>
                 </Form>
               </>
             )}
           </Space>
-        </BasicCard>
+        </AntCard>
       </CenterContainer>
     </>
   );

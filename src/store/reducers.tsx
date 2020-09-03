@@ -15,6 +15,7 @@ import {
   RES_JOIN_ROOM,
   RES_START_GAME,
   RESET_TRIED_JOIN,
+  SELECT_PIECE,
   SET_PLAYER_NAME,
   GameActionTypes,
   GameState,
@@ -28,6 +29,7 @@ const GAME_INITIAL_STATE: GameState = {
   board: INITIAL_BOARD,
   loading: false,
   pieces: INIIAL_PIECES,
+  selectedPiece: undefined,
   started: false,
   turn: 1,
 };
@@ -38,6 +40,8 @@ const game = (state = GAME_INITIAL_STATE, action: GameActionTypes) => {
       return { ...state, loading: true };
     case RES_START_GAME:
       return { ...state, loading: false, started: action.started };
+    case SELECT_PIECE:
+      return { ...state, selectedPiece: action.piece };
     default:
       return { ...state };
   }

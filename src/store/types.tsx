@@ -84,6 +84,8 @@ export const REQ_GAME_ACTION = 'REQ_GAME_ACTION';
 
 export const RES_START_GAME = 'START_GAME';
 
+export const SELECT_PIECE = 'SELECT_PIECE';
+
 interface RequestGameAction {
   type: typeof REQ_GAME_ACTION;
 }
@@ -93,7 +95,12 @@ interface ResultStartGameAction {
   type: typeof RES_START_GAME;
 }
 
-export type GameActionTypes = RequestGameAction | ResultStartGameAction;
+interface SelectPieceAction {
+  piece?: number[][];
+  type: typeof SELECT_PIECE;
+}
+
+export type GameActionTypes = RequestGameAction | ResultStartGameAction | SelectPieceAction;
 
 /* 
   STATE TYPES
@@ -119,7 +126,8 @@ export interface RoomState {
 export interface GameState {
   board: number[][];
   loading: boolean;
-  pieces: string[];
+  pieces: number[];
+  selectedPiece?: number[][];
   started: boolean;
   turn: number; // The current player's id
 }

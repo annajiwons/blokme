@@ -2,7 +2,7 @@
 import React from 'react';
 
 // Components
-import { BasicCard, H2, H3, H4 } from '../Visual/AppStyles';
+import { AntCard, H2, H3, H4 } from '../Visual/AppStyles';
 import { Divider, Row, Space } from 'antd';
 
 // Other
@@ -25,7 +25,7 @@ const PlayersCard: React.FC<PlayersCardProps> = ({ players, roomName }) => {
   };
 
   return (
-    <BasicCard padding="5%">
+    <AntCard padding="5%">
       <Row justify="center">
         <H3>Room Code:</H3>
       </Row>
@@ -34,7 +34,7 @@ const PlayersCard: React.FC<PlayersCardProps> = ({ players, roomName }) => {
       </Row>
       <Divider />
       {renderPlayers()}
-    </BasicCard>
+    </AntCard>
   );
 };
 

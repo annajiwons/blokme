@@ -8,31 +8,47 @@ import { CardProps } from 'antd/lib/card';
 import React from 'react';
 import styled from 'styled-components';
 
+export const MAIN_BLUE = '#1890ff';
+export const DARK_BLUE = `#0050b3`;
+
+export const MAIN_CYAN = '#13c2c2';
+
+export const MAIN_GREEN = '#a0d911';
+
+export const MAIN_RED = '#f5222d';
+
+export const MAIN_YELLOW = '#faad14';
+
 interface CommonProps {
   readonly border?: string;
+  readonly borderRadius?: string;
   readonly fontWeight?: string;
   readonly height?: string;
   readonly margin?: string;
   readonly padding?: string;
   readonly width?: string;
 }
-
-interface BasicButtonProps extends ButtonProps, CommonProps {
-  readonly border?: string;
+interface BasicButtonProps extends ButtonProps, CommonProps {}
+interface BasicCardProps extends CardProps, CommonProps {}
+interface ClickableProps extends CommonProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onClick?: () => void;
 }
 
-export const BasicButton: React.FC<BasicButtonProps> = styled(Button)<BasicButtonProps>`
+export const AntButton: React.FC<BasicButtonProps> = styled(Button)<BasicButtonProps>`
   border: ${(props) => props.border};
+  border-radius: ${(props) => props.borderRadius};
+  height: ${(props) => (props.height ? props.height : 'auto')};
   margin: ${(props) => (props.margin ? props.margin : 'auto')};
   padding: ${(props) => (props.padding ? props.padding : 'auto')};
-  width: ${(props) => props.width};
+  width: ${(props) => (props.width ? props.width : 'auto')};
 `;
 
-interface BasicCardProps extends CardProps, CommonProps {}
-
-export const BasicCard: React.FC<BasicCardProps> = styled(Card)<BasicCardProps>`
+export const AntCard: React.FC<BasicCardProps> = styled(Card)<BasicCardProps>`
   margin: ${(props) => (props.margin ? props.margin : 'auto')};
-  padding: ${(props) => (props.padding ? props.padding : 'auto')};
+  .ant-card-body {
+    padding: ${(props) => (props.padding ? props.padding : 'auto')};
+  }
 `;
 
 export const CenterContainer: React.FC = styled.div`
@@ -40,6 +56,8 @@ export const CenterContainer: React.FC = styled.div`
   display: flex;
   justify-content: center;
 `;
+
+export const BasicButton: React.FC = styled.button<ClickableProps>``;
 
 export const H1: React.FC<CommonProps> = styled.h1<CommonProps>`
   font-family: Open Sans;
@@ -66,17 +84,24 @@ export const H4: React.FC<CommonProps> = styled.h4<CommonProps>`
 `;
 
 export const Table: React.FC<CommonProps> = styled.table<CommonProps>`
-  border: 1px solid black;
+  border: ${(props) => (props.border ? props.border : 'transparent')};
   border-collapse: collapse;
+  height: ${(props) => (props.height ? props.height : 'auto')};
+  margin: ${(props) => (props.margin ? props.margin : 'auto')};
+  table-layout: auto;
+  width: ${(props) => (props.width ? props.width : 'auto')};
 `;
+
 export const TableRow: React.FC<CommonProps> = styled.tr<CommonProps>`
-  border: 1px solid black;
+  border: ${(props) => (props.border ? props.border : 'transparent')};
   border-collapse: collapse;
 `;
+
 export const TableData: React.FC<CommonProps> = styled.td<CommonProps>`
-  border: 1px solid black;
+  border: ${(props) => (props.border ? props.border : 'transparent')};
   border-collapse: collapse;
-  &.style {
-    padding: 4%;
-  }
+  height: ${(props) => (props.height ? props.height : 'auto')};
+  padding: ${(props) => (props.padding ? props.padding : 'auto')};
+  white-space: nowrap;
+  width: ${(props) => (props.width ? props.width : 'auto')};
 `;

@@ -5,11 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 
 // Components
-import { BasicButton, BasicCard, CenterContainer } from '../Visual/AppStyles';
+import { AntButton, AntCard, CenterContainer } from '../Visual/AppStyles';
 import { Col, Row } from 'antd';
 import Board from './Board';
 import Lobby from './Lobby';
 import PlayersList from './PlayersList';
+import PlayerPieces from './PlayerPieces';
 import { Redirect } from 'react-router-dom';
 
 // Other
@@ -30,15 +31,18 @@ const Game: React.FC<GameProps> = ({ match }) => {
   const board = useSelector((state: RootState) => state.game.board);
   const checkedValidRoom = useSelector((state: RootState) => state.room.checkedValidRoom);
   const gameStarted = useSelector((state: RootState) => state.game.started);
+  const pieces = useSelector((state: RootState) => state.game.pieces);
   const playerId = useSelector((state: RootState) => state.room.playerId);
   const playerName = useSelector((state: RootState) => state.room.playerName);
   const players = useSelector((state: RootState) => state.room.players);
   const roomName = useSelector((state: RootState) => state.room.roomName);
+  const turn = useSelector((state: RootState) => state.game.turn);
 
   // const [isLoading, setLoading] = useState(true);
   const [currPiece, setCurrPiece] = useState(0);
   const [isRedirectToHome, setRedirectToHome] = useState(false);
 
+  // TODO uncomment
   // useEffect(() => {
   //   if (!roomName || !playerName) {
   //     dispatch(clearRoomData());
@@ -94,7 +98,15 @@ const Game: React.FC<GameProps> = ({ match }) => {
 
   return (
     <>
-      <Board board={board} currPiece={currPiece} />
+      <Row align="middle" justify="space-around">
+        <Col span={8}>
+          <PlayerPieces pieceIds={pieces} />
+        </Col>
+        <Col span={16}>
+          <Board board={board} currPiece={currPiece} isPlayerTurn={turn === playerId} />
+        </Col>
+      </Row>
+
       {/* {gameStarted ? (
         <>
           <Board board={board} currPiece={currPiece} />
