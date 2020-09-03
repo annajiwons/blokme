@@ -90,7 +90,9 @@ export enum PIECE_ROTATION {
   LEFT,
 }
 
-export const INITIAL_BOARD = Array(SIDE_LEN).fill(Array(SIDE_LEN).fill(0));
+export const INITIAL_BOARD = Array(SIDE_LEN)
+  .fill(null)
+  .map(() => Array(SIDE_LEN).fill(0));
 export const INIIAL_PIECES = Array.from(Array(PIECES.length).keys());
 
 export const PLAYER_COLORS = {

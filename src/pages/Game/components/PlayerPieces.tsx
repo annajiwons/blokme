@@ -1,6 +1,6 @@
 // Third Party
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // Components
 import { AntButton, AntCard } from '../../Visual/AppStyles';
@@ -9,7 +9,9 @@ import { RotateRightOutlined, SwapOutlined } from '@ant-design/icons';
 import Piece from './Piece';
 
 // Other
+import { selectPiece } from '../../../store/actions';
 import { PIECES } from '../../../logic/constants';
+import { flipMatrix, rotateMatrix } from '../../../logic/gamelogic';
 import { RootState } from '../../../store/reducers';
 
 type PlayerPiecesProps = {
@@ -17,6 +19,8 @@ type PlayerPiecesProps = {
 };
 
 const PlayerPieces: React.FC<PlayerPiecesProps> = ({ pieceIds }) => {
+  const dispatch = useDispatch();
+
   const selectedPiece = useSelector((state: RootState) => state.game.selectedPiece);
 
   const renderPieces = () => {
@@ -33,9 +37,17 @@ const PlayerPieces: React.FC<PlayerPiecesProps> = ({ pieceIds }) => {
     );
   };
 
-  const flipSelectedPiece = () => {};
+  const flipSelectedPiece = () => {
+    if (selectedPiece) {
+      dispatch(selectPiece(flipMatrix(selectedPiece)));
+    }
+  };
 
-  const rotateSelectedPiece = () => {};
+  const rotateSelectedPiece = () => {
+    if (selectedPiece) {
+      dispatch(selectPiece(rotateMatrix(selectedPiece)));
+    }
+  };
 
   return (
     <>
@@ -51,7 +63,7 @@ const PlayerPieces: React.FC<PlayerPiecesProps> = ({ pieceIds }) => {
               <AntButton shape="circle" icon={<RotateRightOutlined />} onClick={rotateSelectedPiece} />
             </Col>
             <Col span={4}>
-              <AntButton shape="circle" icon={<SwapOutlined />} onClick={rotateSelectedPiece} />
+              <AntButton shape="circle" icon={<SwapOutlined />} onClick={flipSelectedPiece} />
             </Col>
           </Row>
         </Space>
