@@ -2,11 +2,11 @@
 import React from 'react';
 
 // Components
-import { AntCard, H2, H3, H4 } from '../Visual/AppStyles';
-import { Divider, Row, Space } from 'antd';
+import { AntCard, H2, H3 } from '../../Visual/AppStyles';
+import { Divider, Row } from 'antd';
 
 // Other
-import { Player } from '../../store/types';
+import { Player } from '../../../store/types';
 
 type PlayersCardProps = {
   players: Map<number, Player>;

@@ -1,15 +1,10 @@
 // Third Party
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 
 // Components
-import { CenterContainer, DARK_BLUE, Table, TableRow } from '../Visual/AppStyles';
-import { Col, Divider, Row, Space } from 'antd';
+import { CenterContainer, Table, TableRow } from '../../Visual/AppStyles';
 import Tile from './Tile';
-
-// Other
-import { RootState } from '../../store/reducers';
-import { Player } from '../../store/types';
 
 type BoardProps = {
   board: number[][];

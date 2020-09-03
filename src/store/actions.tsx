@@ -9,7 +9,6 @@ import { generateRoomName, getUnusedPlayerId } from '../functions';
 import {
   ADD_PLAYER,
   CLEAR_ROOM_DATA,
-  REMOVE_PLAYER,
   REQ_GAME_ACTION,
   REQ_ROOM_ACTION,
   RES_CHECK_ROOM,
@@ -40,14 +39,6 @@ export const setPlayerName = (name: string): RoomActionTypes => {
 export const addPlayer = (player: Player): RoomActionTypes => {
   return {
     type: ADD_PLAYER,
-    player: player,
-  };
-};
-
-// TODO REMOVE?
-export const removePlayer = (player: Player): RoomActionTypes => {
-  return {
-    type: REMOVE_PLAYER,
     player: player,
   };
 };

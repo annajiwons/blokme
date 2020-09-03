@@ -22,7 +22,6 @@ const getRandomInt = (min: number, max: number): number => {
 };
 
 // Reducer Utils
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 export const copyPlayerMapWithAdd = (
   players: Map<number, Player>,
   newId: number,
@@ -33,15 +32,5 @@ export const copyPlayerMapWithAdd = (
     newPlayers.set(id, player);
   });
   newPlayers.set(newId, newPlayer);
-  return newPlayers;
-};
-
-export const copyPlayerMapWithRemove = (players: Map<number, Player>, removeId: number): Map<number, Player> => {
-  const newPlayers = new Map<number, Player>();
-  players.forEach((player, id) => {
-    if (id !== removeId) {
-      newPlayers.set(id, player);
-    }
-  });
   return newPlayers;
 };

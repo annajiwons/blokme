@@ -3,11 +3,10 @@ import { combineReducers } from 'redux';
 
 // Other
 import { INITIAL_BOARD, INIIAL_PIECES } from '../logic/constants';
-import { copyPlayerMapWithAdd, copyPlayerMapWithRemove } from '../functions';
+import { copyPlayerMapWithAdd } from '../functions';
 import {
   ADD_PLAYER,
   CLEAR_ROOM_DATA,
-  REMOVE_PLAYER,
   REQ_GAME_ACTION,
   REQ_ROOM_ACTION,
   RES_CHECK_ROOM,

@@ -2,7 +2,7 @@
 import React from 'react';
 
 // Components
-import Main from './components/Main/';
+import Main from './pages/Main';
 import { Provider } from 'react-redux';
 import ReduxThunk from 'redux-thunk';
 import { BrowserRouter } from 'react-router-dom';

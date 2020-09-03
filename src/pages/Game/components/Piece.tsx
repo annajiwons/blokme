@@ -1,16 +1,12 @@
 // Third Party
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 // Components
-import { AntButton, DARK_BLUE, Table, TableData, TableRow } from '../Visual/AppStyles';
-import { Col, Divider, Row } from 'antd';
+import { AntButton, DARK_BLUE, Table, TableData, TableRow } from '../../Visual/AppStyles';
 
 // Other
-import { selectPiece } from '../../store/actions';
-import { PIECES, PIECE_ROTATION } from '../../logic/constants';
-import { RootState } from '../../store/reducers';
-import { Player } from '../../store/types';
+import { selectPiece } from '../../../store/actions';
 
 type PieceProps = {
   pieceMatrix: number[][];

@@ -1,17 +1,16 @@
 // Third Party
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 
 // Components
-import { AntButton, AntCard, Table, TableData, TableRow } from '../Visual/AppStyles';
+import { AntButton, AntCard } from '../../Visual/AppStyles';
 import { Col, Divider, Row, Space } from 'antd';
 import { RotateRightOutlined, SwapOutlined } from '@ant-design/icons';
 import Piece from './Piece';
 
 // Other
-import { PIECES, PIECE_ROTATION } from '../../logic/constants';
-import { RootState } from '../../store/reducers';
-import { Player } from '../../store/types';
+import { PIECES } from '../../../logic/constants';
+import { RootState } from '../../../store/reducers';
 
 type PlayerPiecesProps = {
   pieceIds: number[];

@@ -1,4 +1,4 @@
-import { MAIN_CYAN, MAIN_GREEN, MAIN_RED, MAIN_YELLOW } from '../components/Visual/AppStyles';
+import { MAIN_CYAN, MAIN_GREEN, MAIN_RED, MAIN_YELLOW } from '../pages/Visual/AppStyles';
 
 export const MAX_PLAYERS = 4;
 

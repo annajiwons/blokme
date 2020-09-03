@@ -5,17 +5,10 @@
 // Player
 export const ADD_PLAYER = 'ADD_PLAYER';
 
-export const REMOVE_PLAYER = 'REMOVE_PLAYER';
-
 export const SET_PLAYER_NAME = 'SET_PLAYER_NAME';
 
 interface AddPlayerAction {
   type: typeof ADD_PLAYER;
-  player: Player;
-}
-
-interface RemovePlayerAction {
-  type: typeof REMOVE_PLAYER;
   player: Player;
 }
 
@@ -67,7 +60,6 @@ interface ResetCheckedValidRoomAction {
 
 export type RoomActionTypes =
   | AddPlayerAction
-  | RemovePlayerAction
   | SetPlayerNameAction
   | ClearRoomDataAction
   | RequestRoomAction

@@ -1,14 +1,8 @@
 // Third Party
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
 // Components
-import { AntButton, DARK_BLUE, TableData } from '../Visual/AppStyles';
-import { Col, Divider, Row } from 'antd';
-
-// Other
-import { RootState } from '../../store/reducers';
-import { Player } from '../../store/types';
+import { AntButton, DARK_BLUE, TableData } from '../../Visual/AppStyles';
 
 type TileProps = {
   clickable: boolean;

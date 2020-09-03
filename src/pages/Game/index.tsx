@@ -7,14 +7,14 @@ import { RouteComponentProps } from 'react-router-dom';
 // Components
 import { AntButton, AntCard, CenterContainer } from '../Visual/AppStyles';
 import { Col, Row } from 'antd';
-import Board from './Board';
-import Lobby from './Lobby';
-import PlayersList from './PlayersList';
-import PlayerPieces from './PlayerPieces';
+import Board from './components/Board';
+import Lobby from './components/Lobby';
+import PlayersList from './components/PlayersList';
+import PlayerPieces from './components/PlayerPieces';
 import { Redirect } from 'react-router-dom';
 
 // Other
-import { addPlayer, clearRoomData, checkValidRoom, joinRoom, removePlayer, startGameResult } from '../../store/actions';
+import { addPlayer, clearRoomData, checkValidRoom, joinRoom, startGameResult } from '../../store/actions';
 import { RootState } from '../../store/reducers';
 import { Player } from '../../store/types';
 
