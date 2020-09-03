@@ -3,7 +3,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 // Components
-import { CenterContainer, Table, TableRow } from '../../Visual/AppStyles';
+import { CenterContainer, Table, TableBody, TableRow } from '../../Visual/AppStyles';
 import Tile from './Tile';
 
 type BoardProps = {
@@ -35,7 +35,9 @@ const Board: React.FC<BoardProps> = ({ board, currPiece, isPlayerTurn }) => {
   return (
     <>
       <CenterContainer>
-        <Table margin="0">{renderBoard()}</Table>
+        <Table margin="0">
+          <TableBody>{renderBoard()}</TableBody>
+        </Table>
       </CenterContainer>
     </>
   );

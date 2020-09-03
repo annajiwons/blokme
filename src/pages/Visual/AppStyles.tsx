@@ -92,6 +92,8 @@ export const Table: React.FC<CommonProps> = styled.table<CommonProps>`
   width: ${(props) => (props.width ? props.width : 'auto')};
 `;
 
+export const TableBody: React.FC<CommonProps> = styled.tbody<CommonProps>``;
+
 export const TableRow: React.FC<CommonProps> = styled.tr<CommonProps>`
   border: ${(props) => (props.border ? props.border : 'transparent')};
   border-collapse: collapse;

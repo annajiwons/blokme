@@ -3,7 +3,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 // Components
-import { AntButton, DARK_BLUE, Table, TableData, TableRow } from '../../Visual/AppStyles';
+import { AntButton, DARK_BLUE, Table, TableBody, TableData, TableRow } from '../../Visual/AppStyles';
 
 // Other
 import { selectPiece } from '../../../store/actions';
@@ -48,7 +48,7 @@ const Piece: React.FC<PieceProps> = ({ pieceMatrix }) => {
   return (
     <>
       <Table margin="10% 0" padding="0">
-        {renderPiece()}
+        <TableBody>{renderPiece()}</TableBody>
       </Table>
     </>
   );
