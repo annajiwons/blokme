@@ -3,9 +3,9 @@ import { db } from '../firebase';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
 // Other
-import { INITIAL_BOARD, MAX_PLAYERS } from '../logic/constants';
+import { INITIAL_BOARD, MAX_PLAYERS } from '../logic/gamelogic/constants';
 import { matrixToString } from '../logic/gamelogic';
-import { generateRoomName, getUnusedPlayerId } from '../functions';
+import { generateRoomName, getUnusedPlayerId } from '../logic/roomlogic';
 import {
   ADD_PLAYER,
   CLEAR_ROOM_DATA,
@@ -18,6 +18,7 @@ import {
   RESET_TRIED_JOIN,
   SELECT_PIECE,
   SET_PLAYER_NAME,
+  UPDATE_CORNERS,
   GameActionTypes,
   GameState,
   Player,
@@ -212,5 +213,12 @@ export const startGameResult = (started: boolean): GameActionTypes => {
   return {
     started: started,
     type: RES_START_GAME,
+  };
+};
+
+export const updateCorners = (corners: boolean[][]): GameActionTypes => {
+  return {
+    corners: corners,
+    type: UPDATE_CORNERS,
   };
 };

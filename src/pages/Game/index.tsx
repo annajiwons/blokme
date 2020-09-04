@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 
 // Components
-import { AntButton, AntCard, CenterContainer } from '../Visual/AppStyles';
+import { AntButton, AntCard, CenterContainer } from '../../Visual/AppStyles';
 import { Col, Row } from 'antd';
 import Board from './components/Board';
 import Lobby from './components/Lobby';
@@ -14,7 +14,15 @@ import PlayerPieces from './components/PlayerPieces';
 import { Redirect } from 'react-router-dom';
 
 // Other
-import { addPlayer, clearRoomData, checkValidRoom, joinRoom, startGameResult } from '../../store/actions';
+import {
+  addPlayer,
+  clearRoomData,
+  checkValidRoom,
+  joinRoom,
+  startGameResult,
+  updateCorners,
+} from '../../store/actions';
+import { getInitialCorners } from '../../logic/gamelogic/index';
 import { RootState } from '../../store/reducers';
 import { Player } from '../../store/types';
 
@@ -30,16 +38,17 @@ const Game: React.FC<GameProps> = ({ match }) => {
   // TODO if roomname in url, redirect to start page with room name filled in
   const board = useSelector((state: RootState) => state.game.board);
   const checkedValidRoom = useSelector((state: RootState) => state.room.checkedValidRoom);
+  const corners = useSelector((state: RootState) => state.game.corners);
   const gameStarted = useSelector((state: RootState) => state.game.started);
   const pieces = useSelector((state: RootState) => state.game.pieces);
   const playerId = useSelector((state: RootState) => state.room.playerId);
   const playerName = useSelector((state: RootState) => state.room.playerName);
   const players = useSelector((state: RootState) => state.room.players);
   const roomName = useSelector((state: RootState) => state.room.roomName);
+  const selectedPiece = useSelector((state: RootState) => state.game.selectedPiece);
   const turn = useSelector((state: RootState) => state.game.turn);
 
   // const [isLoading, setLoading] = useState(true);
-  const [currPiece, setCurrPiece] = useState(0);
   const [isRedirectToHome, setRedirectToHome] = useState(false);
 
   // TODO uncomment
@@ -54,6 +63,11 @@ const Game: React.FC<GameProps> = ({ match }) => {
   //     dispatch(joinRoom(playerName, roomName));
   //   }
   // }, []);
+
+  // TODO remove and add to above
+  useEffect(() => {
+    updateCorners(getInitialCorners(playerId));
+  }, []);
 
   useEffect(() => {
     const playerIdStr = playerId?.toString();
@@ -80,6 +94,8 @@ const Game: React.FC<GameProps> = ({ match }) => {
     });
   }, []);
 
+  // TODO add game updates
+
   // TODO: Fix loading
   // useEffect(() => {
   //   if ((!roomName && checkedValidRoom) || !playerName) {
@@ -103,13 +119,19 @@ const Game: React.FC<GameProps> = ({ match }) => {
           <PlayerPieces pieceIds={pieces} />
         </Col>
         <Col span={16}>
-          <Board board={board} currPiece={currPiece} isPlayerTurn={turn === playerId} />
+          <Board
+            board={board}
+            corners={corners}
+            isPlayerTurn={turn === playerId}
+            playerId={playerId}
+            selectedPiece={selectedPiece}
+          />
         </Col>
       </Row>
 
       {/* {gameStarted ? (
         <>
-          <Board board={board} currPiece={currPiece} />
+          <Board board={board} selectedPiece={selectedPiece} />
         </>
       ) : (
         <Lobby players={players} roomName={roomName} />

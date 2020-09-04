@@ -3,7 +3,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 // Components
-import { AntButton, DARK_BLUE, Table, TableBody, TableData, TableRow } from '../../Visual/AppStyles';
+import { AntButton, DARK_BLUE, Table, TableBody, TableData, TableRow } from '../../../Visual/AppStyles';
 
 // Other
 import { selectPiece } from '../../../store/actions';

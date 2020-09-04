@@ -2,7 +2,7 @@
 import React from 'react';
 
 // Components
-import { AntCard, H2, H3 } from '../../Visual/AppStyles';
+import { AntCard, H2, H3 } from '../../../Visual/AppStyles';
 import { Divider, Row } from 'antd';
 
 // Other

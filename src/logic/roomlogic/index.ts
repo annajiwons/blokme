@@ -1,5 +1,5 @@
 import { adjective, dessert } from './roomnames';
-import { Player } from '../store/types';
+import { Player } from '../../store/types';
 
 // Player
 // TODO fix this :)

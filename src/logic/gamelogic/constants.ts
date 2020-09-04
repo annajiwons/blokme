@@ -1,4 +1,4 @@
-import { MAIN_CYAN, MAIN_GREEN, MAIN_RED, MAIN_YELLOW } from '../pages/Visual/AppStyles';
+import { MAIN_CYAN, MAIN_GREEN, MAIN_RED, MAIN_YELLOW } from '../../Visual/AppStyles';
 
 export const MAX_PLAYERS = 4;
 
@@ -82,13 +82,6 @@ export const PIECES = [
     [1, 0, 1],
   ],
 ];
-
-export enum PIECE_ROTATION {
-  UP,
-  RIGHT,
-  DOWN,
-  LEFT,
-}
 
 export const INITIAL_BOARD = Array(SIDE_LEN)
   .fill(null)

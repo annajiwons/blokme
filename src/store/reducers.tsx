@@ -1,9 +1,10 @@
 // Third Party
+import _ from 'lodash';
 import { combineReducers } from 'redux';
 
 // Other
-import { INITIAL_BOARD, INIIAL_PIECES } from '../logic/constants';
-import { copyPlayerMapWithAdd } from '../functions';
+import { INITIAL_BOARD, INIIAL_PIECES } from '../logic/gamelogic/constants';
+import { copyPlayerMapWithAdd } from '../logic/roomlogic';
 import {
   ADD_PLAYER,
   CLEAR_ROOM_DATA,
@@ -16,6 +17,7 @@ import {
   RESET_TRIED_JOIN,
   SELECT_PIECE,
   SET_PLAYER_NAME,
+  UPDATE_CORNERS,
   GameActionTypes,
   GameState,
   Player,
@@ -26,6 +28,7 @@ import {
 // Game
 const GAME_INITIAL_STATE: GameState = {
   board: INITIAL_BOARD,
+  corners: [],
   loading: false,
   pieces: INIIAL_PIECES,
   selectedPiece: undefined,
@@ -41,6 +44,8 @@ const game = (state = GAME_INITIAL_STATE, action: GameActionTypes) => {
       return { ...state, loading: false, started: action.started };
     case SELECT_PIECE:
       return { ...state, selectedPiece: action.piece };
+    case UPDATE_CORNERS:
+      return { ...state, corners: _.cloneDeep(action.corners) };
     default:
       return { ...state };
   }
@@ -72,11 +77,6 @@ const room = (state = ROOM_INITIAL_STATE, action: RoomActionTypes) => {
         players: new Map<number, Player>(),
         roomName: '',
       };
-    // case REMOVE_PLAYER:
-    //   return {
-    //     ...state,
-    //     players: copyPlayerMapWithRemove(state.players, action.player.id),
-    //   };
     case REQ_ROOM_ACTION:
       return { ...state, loading: true };
     case RES_CHECK_ROOM:

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 // Components
-import { AntButton, AntCard, CenterContainer, H1 } from '../Visual/AppStyles';
+import { AntButton, AntCard, CenterContainer, H1 } from '../../Visual/AppStyles';
 import { Col, Divider, Form, Input, Row, Space } from 'antd';
 import { Redirect } from 'react-router-dom';
 

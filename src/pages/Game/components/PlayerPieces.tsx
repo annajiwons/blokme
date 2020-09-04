@@ -3,14 +3,14 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 // Components
-import { AntButton, AntCard } from '../../Visual/AppStyles';
+import { AntButton, AntCard } from '../../../Visual/AppStyles';
 import { Col, Divider, Row, Space } from 'antd';
 import { RotateRightOutlined, SwapOutlined } from '@ant-design/icons';
 import Piece from './Piece';
 
 // Other
 import { selectPiece } from '../../../store/actions';
-import { PIECES } from '../../../logic/constants';
+import { PIECES } from '../../../logic/gamelogic/constants';
 import { flipMatrix, rotateMatrix } from '../../../logic/gamelogic';
 import { RootState } from '../../../store/reducers';
 

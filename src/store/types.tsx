@@ -78,6 +78,8 @@ export const RES_START_GAME = 'START_GAME';
 
 export const SELECT_PIECE = 'SELECT_PIECE';
 
+export const UPDATE_CORNERS = 'UPDATE_CORNERS';
+
 interface RequestGameAction {
   type: typeof REQ_GAME_ACTION;
 }
@@ -92,7 +94,12 @@ interface SelectPieceAction {
   type: typeof SELECT_PIECE;
 }
 
-export type GameActionTypes = RequestGameAction | ResultStartGameAction | SelectPieceAction;
+interface UpdateCornersAction {
+  corners: boolean[][];
+  type: typeof UPDATE_CORNERS;
+}
+
+export type GameActionTypes = RequestGameAction | ResultStartGameAction | SelectPieceAction | UpdateCornersAction;
 
 /* 
   STATE TYPES
@@ -117,6 +124,7 @@ export interface RoomState {
 // Game
 export interface GameState {
   board: number[][];
+  corners: boolean[][]; // Possible corner coordinates for the current player
   loading: boolean;
   pieces: number[];
   selectedPiece?: number[][];

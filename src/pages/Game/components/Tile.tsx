@@ -2,7 +2,7 @@
 import React from 'react';
 
 // Components
-import { AntButton, DARK_BLUE, TableData } from '../../Visual/AppStyles';
+import { AntButton, DARK_BLUE, TableData } from '../../../Visual/AppStyles';
 
 type TileProps = {
   clickable: boolean;

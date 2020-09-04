@@ -3,20 +3,31 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 // Components
-import { CenterContainer, Table, TableBody, TableRow } from '../../Visual/AppStyles';
+import { CenterContainer, Table, TableBody, TableRow } from '../../../Visual/AppStyles';
 import Tile from './Tile';
+
+// Other
+import { validCorner } from '../../../logic/gamelogic';
 
 type BoardProps = {
   board: number[][];
-  currPiece: number;
+  corners: boolean[][];
   isPlayerTurn: boolean;
+  playerId: number;
+  selectedPiece?: number[][];
 };
 
-const Board: React.FC<BoardProps> = ({ board, currPiece, isPlayerTurn }) => {
+const Board: React.FC<BoardProps> = ({ board, corners, isPlayerTurn, playerId, selectedPiece }) => {
   const dispatch = useDispatch();
 
-  const tileIsClickable = () => {
-    return isPlayerTurn;
+  const tileIsClickable = (rowI: number, colI: number) => {
+    if (!isPlayerTurn) {
+      return false;
+    }
+    if (selectedPiece) {
+      return validCorner(board, rowI, colI, selectedPiece, playerId);
+    }
+    return true; // TODO when no selected piece, try all leftover pieces in all orientations
   };
 
   const renderBoard = () => {
