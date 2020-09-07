@@ -22,7 +22,8 @@ import {
   startGameResult,
   updateCorners,
 } from '../../store/actions';
-import { getInitialCorners } from '../../logic/gamelogic/index';
+import { PieceType } from '../../logic/gamelogic/constants';
+import { getInitialCorners } from '../../logic/gamelogic';
 import { RootState } from '../../store/reducers';
 import { Player } from '../../store/types';
 
@@ -45,11 +46,11 @@ const Game: React.FC<GameProps> = ({ match }) => {
   const playerName = useSelector((state: RootState) => state.room.playerName);
   const players = useSelector((state: RootState) => state.room.players);
   const roomName = useSelector((state: RootState) => state.room.roomName);
-  const selectedPiece = useSelector((state: RootState) => state.game.selectedPiece);
   const turn = useSelector((state: RootState) => state.game.turn);
 
   // const [isLoading, setLoading] = useState(true);
   const [isRedirectToHome, setRedirectToHome] = useState(false);
+  const [selectedPiece, setSelectedPiece] = useState<undefined | PieceType>(undefined);
 
   // TODO uncomment
   // useEffect(() => {
@@ -116,7 +117,7 @@ const Game: React.FC<GameProps> = ({ match }) => {
     <>
       <Row align="middle" justify="space-around">
         <Col span={8}>
-          <PlayerPieces pieceIds={pieces} />
+          <PlayerPieces pieceIds={pieces} selectedPiece={selectedPiece} setSelectedPiece={setSelectedPiece} />
         </Col>
         <Col span={16}>
           <Board

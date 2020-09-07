@@ -76,8 +76,6 @@ export const REQ_GAME_ACTION = 'REQ_GAME_ACTION';
 
 export const RES_START_GAME = 'START_GAME';
 
-export const SELECT_PIECE = 'SELECT_PIECE';
-
 export const UPDATE_CORNERS = 'UPDATE_CORNERS';
 
 interface RequestGameAction {
@@ -89,17 +87,12 @@ interface ResultStartGameAction {
   type: typeof RES_START_GAME;
 }
 
-interface SelectPieceAction {
-  piece?: number[][];
-  type: typeof SELECT_PIECE;
-}
-
 interface UpdateCornersAction {
   corners: boolean[][];
   type: typeof UPDATE_CORNERS;
 }
 
-export type GameActionTypes = RequestGameAction | ResultStartGameAction | SelectPieceAction | UpdateCornersAction;
+export type GameActionTypes = RequestGameAction | ResultStartGameAction | UpdateCornersAction;
 
 /* 
   STATE TYPES
@@ -127,7 +120,6 @@ export interface GameState {
   corners: boolean[][]; // Possible corner coordinates for the current player
   loading: boolean;
   pieces: number[];
-  selectedPiece?: number[][];
   started: boolean;
   turn: number; // The current player's id
 }

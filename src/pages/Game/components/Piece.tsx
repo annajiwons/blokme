@@ -1,22 +1,22 @@
 // Third Party
 import React from 'react';
-import { useDispatch } from 'react-redux';
 
 // Components
 import { AntButton, DARK_BLUE, Table, TableBody, TableData, TableRow } from '../../../Visual/AppStyles';
 
 // Other
-import { selectPiece } from '../../../store/actions';
+import { PieceType } from '../../../logic/gamelogic/constants';
 
 type PieceProps = {
-  pieceMatrix: number[][];
+  piece: PieceType;
+  setSelectedPiece: (
+    value: (PieceType | undefined) | ((prevVar: PieceType | undefined) => PieceType | undefined),
+  ) => void;
 };
 
-const Piece: React.FC<PieceProps> = ({ pieceMatrix }) => {
-  const dispatch = useDispatch();
-
+const Piece: React.FC<PieceProps> = ({ piece, setSelectedPiece }) => {
   const renderPiece = () => {
-    return pieceMatrix.map((row, rowI) => {
+    return piece.matrix.map((row, rowI) => {
       return (
         <TableRow key={rowI}>
           {row.map((tile, colI) => {
@@ -36,7 +36,8 @@ const Piece: React.FC<PieceProps> = ({ pieceMatrix }) => {
                 {/* <AntButton border="none" borderRadius="0" height="100%" margin="0" padding="0" width="100%">
                   {' '}
                 </AntButton> */}
-                <button onClick={() => dispatch(selectPiece(pieceMatrix))}></button>
+                {/* TODO add selectpiece */}
+                <button onClick={() => setSelectedPiece(piece)}></button>
               </TableData>
             );
           })}

@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { combineReducers } from 'redux';
 
 // Other
-import { INITIAL_BOARD, INIIAL_PIECES } from '../logic/gamelogic/constants';
+import { INITIAL_BOARD, INITIAL_PIECES } from '../logic/gamelogic/constants';
 import { copyPlayerMapWithAdd } from '../logic/roomlogic';
 import {
   ADD_PLAYER,
@@ -15,7 +15,6 @@ import {
   RES_JOIN_ROOM,
   RES_START_GAME,
   RESET_TRIED_JOIN,
-  SELECT_PIECE,
   SET_PLAYER_NAME,
   UPDATE_CORNERS,
   GameActionTypes,
@@ -30,8 +29,7 @@ const GAME_INITIAL_STATE: GameState = {
   board: INITIAL_BOARD,
   corners: [],
   loading: false,
-  pieces: INIIAL_PIECES,
-  selectedPiece: undefined,
+  pieces: INITIAL_PIECES,
   started: false,
   turn: 1,
 };
@@ -42,8 +40,6 @@ const game = (state = GAME_INITIAL_STATE, action: GameActionTypes) => {
       return { ...state, loading: true };
     case RES_START_GAME:
       return { ...state, loading: false, started: action.started };
-    case SELECT_PIECE:
-      return { ...state, selectedPiece: action.piece };
     case UPDATE_CORNERS:
       return { ...state, corners: _.cloneDeep(action.corners) };
     default:

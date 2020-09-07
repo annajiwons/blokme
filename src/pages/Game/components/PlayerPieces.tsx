@@ -1,6 +1,5 @@
 // Third Party
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
 // Components
 import { AntButton, AntCard } from '../../../Visual/AppStyles';
@@ -9,27 +8,26 @@ import { RotateRightOutlined, SwapOutlined } from '@ant-design/icons';
 import Piece from './Piece';
 
 // Other
-import { selectPiece } from '../../../store/actions';
-import { PIECES } from '../../../logic/gamelogic/constants';
-import { flipMatrix, rotateMatrix } from '../../../logic/gamelogic';
+import { PieceType, PIECES } from '../../../logic/gamelogic/constants';
+import { flipPiece, rotatePiece } from '../../../logic/gamelogic';
 import { RootState } from '../../../store/reducers';
 
 type PlayerPiecesProps = {
   pieceIds: number[];
+  selectedPiece?: PieceType;
+  setSelectedPiece: (
+    value: (PieceType | undefined) | ((prevVar: PieceType | undefined) => PieceType | undefined),
+  ) => void;
 };
 
-const PlayerPieces: React.FC<PlayerPiecesProps> = ({ pieceIds }) => {
-  const dispatch = useDispatch();
-
-  const selectedPiece = useSelector((state: RootState) => state.game.selectedPiece);
-
+const PlayerPieces: React.FC<PlayerPiecesProps> = ({ pieceIds, selectedPiece, setSelectedPiece }) => {
   const renderPieces = () => {
     return (
       <>
         {pieceIds.map((id) => {
           return (
             <Col key={id} span={8}>
-              <Piece pieceMatrix={PIECES[id]} />
+              <Piece piece={PIECES[id]} setSelectedPiece={setSelectedPiece} />
             </Col>
           );
         })}
@@ -39,13 +37,13 @@ const PlayerPieces: React.FC<PlayerPiecesProps> = ({ pieceIds }) => {
 
   const flipSelectedPiece = () => {
     if (selectedPiece) {
-      dispatch(selectPiece(flipMatrix(selectedPiece)));
+      setSelectedPiece(flipPiece(selectedPiece));
     }
   };
 
   const rotateSelectedPiece = () => {
     if (selectedPiece) {
-      dispatch(selectPiece(rotateMatrix(selectedPiece)));
+      setSelectedPiece(rotatePiece(selectedPiece));
     }
   };
 
@@ -58,7 +56,7 @@ const PlayerPieces: React.FC<PlayerPiecesProps> = ({ pieceIds }) => {
           </Row>
           <Divider />
           <Row align="middle" justify="space-between">
-            <Col span={16}>{selectedPiece && <Piece pieceMatrix={selectedPiece} />}</Col>
+            <Col span={16}>{selectedPiece && <Piece piece={selectedPiece} setSelectedPiece={setSelectedPiece} />}</Col>
             <Col span={4}>
               <AntButton shape="circle" icon={<RotateRightOutlined />} onClick={rotateSelectedPiece} />
             </Col>

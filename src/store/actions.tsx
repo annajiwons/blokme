@@ -16,7 +16,6 @@ import {
   RES_JOIN_ROOM,
   RES_START_GAME,
   RESET_TRIED_JOIN,
-  SELECT_PIECE,
   SET_PLAYER_NAME,
   UPDATE_CORNERS,
   GameActionTypes,
@@ -199,13 +198,6 @@ export const startGame = (roomName: string): ThunkAction<void, GameState, unknow
 export const requestGameAction = (): GameActionTypes => {
   return {
     type: REQ_GAME_ACTION,
-  };
-};
-
-export const selectPiece = (piece?: number[][]): GameActionTypes => {
-  return {
-    piece: piece,
-    type: SELECT_PIECE,
   };
 };
 
