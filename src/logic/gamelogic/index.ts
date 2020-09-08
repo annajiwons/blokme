@@ -168,21 +168,18 @@ const touchesOwnCorner = (playerId: number, board: number[][], boardRow: number,
  **/
 export const isValidPosition = (
   board: number[][],
-  selectedRow: number,
-  selectedCol: number,
-  selectedPiece: PieceType,
+  row: number,
+  col: number,
+  piece: PieceType,
   playerId: number,
 ): boolean => {
-  if (!isTileInBounds(selectedRow, selectedCol)) return false;
+  if (!isTileInBounds(row, col)) return false;
 
-  // let boardRow = selectedRow - Math.floor(PIECE_SIDE_LEN / 2);
   for (let pieceRow = 0; pieceRow < PIECE_SIDE_LEN; pieceRow++) {
-    // let boardCol = selectedCol - Math.floor(PIECE_SIDE_LEN / 2);
     for (let pieceCol = 0; pieceCol < PIECE_SIDE_LEN; pieceCol++) {
-      const boardRow = selectedRow + pieceRow - Math.floor(PIECE_SIDE_LEN / 2);
-      const boardCol = selectedCol + pieceCol - Math.floor(PIECE_SIDE_LEN / 2);
-      if (selectedPiece.matrix[pieceRow][pieceCol] === 0) {
-        // boardCol++;
+      const boardRow = row + pieceRow - Math.floor(PIECE_SIDE_LEN / 2);
+      const boardCol = col + pieceCol - Math.floor(PIECE_SIDE_LEN / 2);
+      if (piece.matrix[pieceRow][pieceCol] === 0) {
         continue; // Ignore, not actually part of piece
       }
 
@@ -204,18 +201,15 @@ export const isValidPosition = (
         console.log('Piece touches the side of own piece already placed');
         return false;
       }
-
-      // boardCol++;
     }
-    // boardRow++;
   }
 
   // 4. Piece must touch a corner of a previously played piece
   //    Since it's already been checked that the piece doesn't touch the sides of a previous piece,
   //    just the four diagonal spaces need to be checked
-  for (const coord of selectedPiece.corners) {
-    const boardRow = selectedRow + coord[0] - Math.floor(PIECE_SIDE_LEN / 2);
-    const boardCol = selectedCol + coord[1] - Math.floor(PIECE_SIDE_LEN / 2);
+  for (const coord of piece.corners) {
+    const boardRow = row + coord[0] - Math.floor(PIECE_SIDE_LEN / 2);
+    const boardCol = col + coord[1] - Math.floor(PIECE_SIDE_LEN / 2);
 
     if (touchesOwnCorner(playerId, board, boardRow, boardCol)) {
       return true;
@@ -223,4 +217,32 @@ export const isValidPosition = (
   }
   console.log('Piece does not touch any existing corners');
   return false;
+};
+
+/**
+ * Places the piece with the center at the given coordinates and returns the new board.
+ **/
+export const placePiece = (
+  board: number[][],
+  row: number,
+  col: number,
+  piece: PieceType,
+  playerId: number,
+): number[][] => {
+  if (!isValidPosition(board, row, col, piece, playerId)) return board;
+
+  const boardCopy = _.cloneDeep(board);
+  for (let pieceRow = 0; pieceRow < PIECE_SIDE_LEN; pieceRow++) {
+    for (let pieceCol = 0; pieceCol < PIECE_SIDE_LEN; pieceCol++) {
+      const boardRow = row + pieceRow - Math.floor(PIECE_SIDE_LEN / 2);
+      const boardCol = col + pieceCol - Math.floor(PIECE_SIDE_LEN / 2);
+      if (piece.matrix[pieceRow][pieceCol] === 0) {
+        continue; // Ignore, not actually part of piece
+      }
+
+      boardCopy[boardRow][boardCol] = playerId;
+    }
+  }
+
+  return boardCopy;
 };
