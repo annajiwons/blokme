@@ -67,7 +67,7 @@ const Game: React.FC<GameProps> = ({ match }) => {
 
   // TODO remove and add to above
   useEffect(() => {
-    updateCorners(getInitialCorners(playerId));
+    dispatch(updateCorners(getInitialCorners(playerId)));
   }, []);
 
   useEffect(() => {

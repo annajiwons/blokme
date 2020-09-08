@@ -1,15 +1,15 @@
 import { MAIN_CYAN, MAIN_GREEN, MAIN_RED, MAIN_YELLOW } from '../../Visual/AppStyles';
 
-export const MAX_PLAYERS = 4;
+export const MAX_PLAYERS = 2;
 
-export const QUARTER_LEN = 10;
-export const SIDE_LEN = QUARTER_LEN * 2;
+export const BOARD_SIDE_LEN = 14;
 
 export interface PieceType {
   corners: number[][];
   id: number;
   matrix: number[][];
 }
+export const PIECE_SIDE_LEN = 5;
 export const PIECES: PieceType[] = [
   {
     corners: [
@@ -320,9 +320,9 @@ export const PIECES: PieceType[] = [
   },
 ];
 
-export const INITIAL_BOARD = Array(SIDE_LEN)
+export const INITIAL_BOARD = Array(BOARD_SIDE_LEN)
   .fill(null)
-  .map(() => Array(SIDE_LEN).fill(0));
+  .map(() => Array(BOARD_SIDE_LEN).fill(0));
 export const INITIAL_PIECES = Array.from(Array(PIECES.length).keys());
 
 export const PLAYER_COLORS = {

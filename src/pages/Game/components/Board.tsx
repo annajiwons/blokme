@@ -1,6 +1,5 @@
 // Third Party
 import React from 'react';
-import { useDispatch } from 'react-redux';
 
 // Components
 import { CenterContainer, Table, TableBody, TableRow } from '../../../Visual/AppStyles';
@@ -8,29 +7,29 @@ import Tile from './Tile';
 
 // Other
 import { PieceType } from '../../../logic/gamelogic/constants';
-import { isValidCorner } from '../../../logic/gamelogic';
+import { isValidPosition } from '../../../logic/gamelogic';
 
 type BoardProps = {
   board: number[][];
-  corners: boolean[][];
+  corners: number[][];
   isPlayerTurn: boolean;
   playerId: number;
   selectedPiece?: PieceType;
 };
 
 const Board: React.FC<BoardProps> = ({ board, corners, isPlayerTurn, playerId, selectedPiece }) => {
-  const dispatch = useDispatch();
-
   const tileIsClickable = (rowI: number, colI: number) => {
     if (!isPlayerTurn) {
       return false;
     }
     if (selectedPiece) {
-      return isValidCorner(board, rowI, colI, selectedPiece, playerId);
+      // return isValidCorner(board, rowI, colI, selectedPiece, playerId);
     }
     return true; // TODO when no selected piece, try all leftover pieces in all orientations
   };
 
+  // TODO: make all not clickable, then watch selectedPiece var for changes
+  // if change occurs, then update only relevent tiles to be clickable
   const renderBoard = () => {
     return board.map((row, rowI) => {
       return (

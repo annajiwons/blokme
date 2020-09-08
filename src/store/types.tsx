@@ -88,7 +88,7 @@ interface ResultStartGameAction {
 }
 
 interface UpdateCornersAction {
-  corners: boolean[][];
+  corners: number[][];
   type: typeof UPDATE_CORNERS;
 }
 
@@ -117,7 +117,7 @@ export interface RoomState {
 // Game
 export interface GameState {
   board: number[][];
-  corners: boolean[][]; // Possible corner coordinates for the current player
+  corners: number[][]; // Possible corner coordinates for the current player
   loading: boolean;
   pieces: number[];
   started: boolean;

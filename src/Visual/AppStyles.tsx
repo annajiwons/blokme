@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-// TODO add types?
 
 // Third Party
 import { Button, Card } from 'antd';

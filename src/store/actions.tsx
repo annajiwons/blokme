@@ -208,7 +208,7 @@ export const startGameResult = (started: boolean): GameActionTypes => {
   };
 };
 
-export const updateCorners = (corners: boolean[][]): GameActionTypes => {
+export const updateCorners = (corners: number[][]): GameActionTypes => {
   return {
     corners: corners,
     type: UPDATE_CORNERS,
