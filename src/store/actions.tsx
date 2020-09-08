@@ -19,6 +19,7 @@ import {
   SET_PLAYER_NAME,
   UPDATE_BOARD_LOCAL,
   UPDATE_REQ_RESULT,
+  UPDATE_TURN_LOCAL,
   GameActionTypes,
   GameState,
   Player,
@@ -210,6 +211,21 @@ export const updateBoardRequest = (
   };
 };
 
+export const updateTurnRequest = (
+  roomName: string,
+  nextTurn: number,
+): ThunkAction<void, GameState, unknown, GameActionTypes> => {
+  return async (dispatch: ThunkDispatch<GameState, unknown, GameActionTypes>): Promise<void> => {
+    // First update turn in local redux state
+    dispatch(updateTurnLocal(nextTurn));
+
+    // Update in firebase
+    dispatch(requestGameAction());
+    await db.ref('rooms/' + roomName).update({ turn: nextTurn });
+    dispatch(updateRequestResult(true)); // TODO update if unsuccesful
+  };
+};
+
 /*
   ===== GAME ACTIONS ======
 */
@@ -238,5 +254,12 @@ export const updateRequestResult = (successful: boolean): GameActionTypes => {
   return {
     successful: successful,
     type: UPDATE_REQ_RESULT,
+  };
+};
+
+export const updateTurnLocal = (turn: number): GameActionTypes => {
+  return {
+    turn: turn,
+    type: UPDATE_TURN_LOCAL,
   };
 };

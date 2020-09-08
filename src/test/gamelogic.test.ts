@@ -1,6 +1,7 @@
 import { INITIAL_BOARD, PieceType } from '../logic/gamelogic/constants';
 import {
   flipPiece,
+  getNextPlayerId,
   isValidPosition,
   placePiece,
   matrixToString,
@@ -463,5 +464,15 @@ describe('placePiece', () => {
     ];
 
     expect(newBoard).toEqual(testBoardWithTestPiece1);
+  });
+});
+
+// Place piece on board
+describe('getNextPlayerId', () => {
+  it("should get the next player's id", () => {
+    expect(getNextPlayerId(1, 4)).toEqual(2);
+    expect(getNextPlayerId(2, 4)).toEqual(3);
+    expect(getNextPlayerId(3, 4)).toEqual(4);
+    expect(getNextPlayerId(4, 4)).toEqual(1);
   });
 });

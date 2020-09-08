@@ -80,6 +80,8 @@ export const UPDATE_BOARD_LOCAL = 'UPDATE_BOARD_LOCAL';
 
 export const UPDATE_REQ_RESULT = 'UPDATE_REQ_RESULT';
 
+export const UPDATE_TURN_LOCAL = 'UPDATE_TURN_LOCAL';
+
 interface RequestGameAction {
   type: typeof REQ_GAME_ACTION;
 }
@@ -99,7 +101,17 @@ interface UpdateRequestResultAction {
   type: typeof UPDATE_REQ_RESULT;
 }
 
-export type GameActionTypes = RequestGameAction | ResultStartGameAction | UpdateBoardAction | UpdateRequestResultAction;
+interface UpdateTurnAction {
+  turn: number;
+  type: typeof UPDATE_TURN_LOCAL;
+}
+
+export type GameActionTypes =
+  | RequestGameAction
+  | ResultStartGameAction
+  | UpdateBoardAction
+  | UpdateRequestResultAction
+  | UpdateTurnAction;
 
 /* 
   STATE TYPES

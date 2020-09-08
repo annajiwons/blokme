@@ -14,8 +14,17 @@ import PlayerPieces from './components/PlayerPieces';
 import { Redirect } from 'react-router-dom';
 
 // Other
-import { addPlayer, clearRoomData, checkValidRoom, joinRoom, startGameResult } from '../../store/actions';
-import { PieceType } from '../../logic/gamelogic/constants';
+import {
+  addPlayer,
+  clearRoomData,
+  checkValidRoom,
+  joinRoom,
+  startGameResult,
+  updateBoardLocal,
+  updateTurnLocal,
+} from '../../store/actions';
+import { BOARD_SIDE_LEN, PieceType } from '../../logic/gamelogic/constants';
+import { stringToMatrix } from '../../logic/gamelogic';
 import { RootState } from '../../store/reducers';
 import { Player } from '../../store/types';
 
@@ -57,6 +66,7 @@ const Game: React.FC<GameProps> = ({ match }) => {
     }
   }, []);
 
+  // Remove the player from the room if they become disconnected
   useEffect(() => {
     const playerIdStr = playerId?.toString();
     const roomNameStr = roomName;
@@ -68,7 +78,7 @@ const Game: React.FC<GameProps> = ({ match }) => {
 
   useEffect(() => {
     db.ref('rooms/' + roomName + '/players').on('value', (snapshot) => {
-      console.log('snap shot val:');
+      console.log('players snap shot val:');
       console.log(snapshot.val()); // TODO change to update all players
       snapshot.forEach((snap) => {
         dispatch(addPlayer(snap.val()));
@@ -78,17 +88,27 @@ const Game: React.FC<GameProps> = ({ match }) => {
 
   useEffect(() => {
     db.ref('rooms/' + roomName + '/started').on('value', (snapshot) => {
-      dispatch(startGameResult(snapshot.val()));
+      if (snapshot.exists()) {
+        dispatch(startGameResult(snapshot.val()));
+      }
     });
   }, []);
 
-  // useEffect(() => {
-  //   db.ref('rooms/' + roomName + '/board').on('value', (snapshot) => {
-  //     dispatch(startGameResult(snapshot.val()));
-  //   });
-  // }, []);
+  useEffect(() => {
+    db.ref('rooms/' + roomName + '/board').on('value', (snapshot) => {
+      if (snapshot.exists()) {
+        dispatch(updateBoardLocal(stringToMatrix(snapshot.val(), BOARD_SIDE_LEN)));
+      }
+    });
+  }, []);
 
-  // TODO add game updates
+  useEffect(() => {
+    db.ref('rooms/' + roomName + '/turn').on('value', (snapshot) => {
+      if (snapshot.exists()) {
+        dispatch(updateTurnLocal(snapshot.val()));
+      }
+    });
+  }, []);
 
   // TODO: Fix loading
   // useEffect(() => {

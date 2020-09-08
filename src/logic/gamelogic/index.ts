@@ -59,7 +59,6 @@ export const matrixToString = (board: number[][]): string => {
 
 export const stringToMatrix = (boardStr: string, n: number): number[][] => {
   const boardStrSplit = boardStr.split(',');
-  console.log(boardStrSplit);
 
   const board = [];
 
@@ -70,8 +69,8 @@ export const stringToMatrix = (boardStr: string, n: number): number[][] => {
     i++;
     if (i === n) {
       board.push(inner);
-      inner = [];
       i = 0;
+      inner = [];
     }
   }
 
@@ -249,4 +248,11 @@ export const placePiece = (
   }
 
   return boardCopy;
+};
+
+/**
+ * Get the playerId of the next player
+ **/
+export const getNextPlayerId = (currPlayerId: number, numPlayers: number) => {
+  return (currPlayerId % numPlayers) + 1;
 };

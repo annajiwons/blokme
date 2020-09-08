@@ -18,6 +18,7 @@ import {
   SET_PLAYER_NAME,
   UPDATE_BOARD_LOCAL,
   UPDATE_REQ_RESULT,
+  UPDATE_TURN_LOCAL,
   GameActionTypes,
   GameState,
   Player,
@@ -44,6 +45,8 @@ const game = (state = GAME_INITIAL_STATE, action: GameActionTypes) => {
       return { ...state, board: _.cloneDeep(action.board) };
     case UPDATE_REQ_RESULT:
       return { ...state, loading: false };
+    case UPDATE_TURN_LOCAL:
+      return { ...state, turn: action.turn };
     default:
       return { ...state };
   }

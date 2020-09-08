@@ -7,9 +7,9 @@ import { AntButton, DARK_BLUE, Div, TableData } from '../../../Visual/AppStyles'
 import { PushpinOutlined } from '@ant-design/icons';
 
 // Other
-import { updateBoardRequest } from '../../../store/actions';
-import { PieceType, PLAYER_COLORS } from '../../../logic/gamelogic/constants';
-import { isValidInitialPosition, isValidPosition, placePiece } from '../../../logic/gamelogic';
+import { updateBoardRequest, updateTurnRequest } from '../../../store/actions';
+import { MAX_PLAYERS, PieceType, PLAYER_COLORS } from '../../../logic/gamelogic/constants';
+import { getNextPlayerId, isValidInitialPosition, isValidPosition, placePiece } from '../../../logic/gamelogic';
 
 type TileProps = {
   board: number[][];
@@ -42,6 +42,11 @@ const Tile: React.FC<TileProps> = ({ board, column, playerId, roomName, row, sel
     if (selectedPiece) {
       const newBoard = placePiece(board, row, column, selectedPiece, playerId);
       dispatch(updateBoardRequest(roomName, newBoard));
+
+      const nextPlayerId = getNextPlayerId(playerId, MAX_PLAYERS);
+      dispatch(updateTurnRequest(roomName, nextPlayerId));
+
+      selectedPiece = undefined;
     }
   };
 
