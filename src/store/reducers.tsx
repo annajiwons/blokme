@@ -17,7 +17,6 @@ import {
   RESET_TRIED_JOIN,
   SET_PLAYER_NAME,
   UPDATE_BOARD_LOCAL,
-  UPDATE_CORNERS,
   UPDATE_REQ_RESULT,
   GameActionTypes,
   GameState,
@@ -44,8 +43,6 @@ const game = (state = GAME_INITIAL_STATE, action: GameActionTypes) => {
       return { ...state, loading: false, started: action.started };
     case UPDATE_BOARD_LOCAL:
       return { ...state, board: _.cloneDeep(action.board) };
-    case UPDATE_CORNERS:
-      return { ...state, corners: _.cloneDeep(action.corners) };
     case UPDATE_REQ_RESULT:
       return { ...state, loading: false };
     default:

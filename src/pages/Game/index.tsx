@@ -14,16 +14,8 @@ import PlayerPieces from './components/PlayerPieces';
 import { Redirect } from 'react-router-dom';
 
 // Other
-import {
-  addPlayer,
-  clearRoomData,
-  checkValidRoom,
-  joinRoom,
-  startGameResult,
-  updateCorners,
-} from '../../store/actions';
+import { addPlayer, clearRoomData, checkValidRoom, joinRoom, startGameResult } from '../../store/actions';
 import { PieceType } from '../../logic/gamelogic/constants';
-import { getInitialCorners } from '../../logic/gamelogic';
 import { RootState } from '../../store/reducers';
 import { Player } from '../../store/types';
 
@@ -39,7 +31,6 @@ const Game: React.FC<GameProps> = ({ match }) => {
   // TODO if roomname in url, redirect to start page with room name filled in
   const board = useSelector((state: RootState) => state.game.board);
   const checkedValidRoom = useSelector((state: RootState) => state.room.checkedValidRoom);
-  const corners = useSelector((state: RootState) => state.game.corners);
   const gameStarted = useSelector((state: RootState) => state.game.started);
   const pieces = useSelector((state: RootState) => state.game.pieces);
   const playerId = useSelector((state: RootState) => state.room.playerId);
@@ -64,10 +55,6 @@ const Game: React.FC<GameProps> = ({ match }) => {
       console.log('joining');
       dispatch(joinRoom(playerName, roomName));
     }
-  }, []);
-
-  useEffect(() => {
-    dispatch(updateCorners(getInitialCorners(playerId)));
   }, []);
 
   useEffect(() => {
@@ -134,9 +121,9 @@ const Game: React.FC<GameProps> = ({ match }) => {
               )}
               <Board
                 board={board}
-                corners={corners}
                 isPlayerTurn={turn === playerId}
                 playerId={playerId}
+                roomName={roomName}
                 selectedPiece={selectedPiece}
                 turn={turn}
               />

@@ -1,5 +1,12 @@
 import { INITIAL_BOARD, PieceType } from '../logic/gamelogic/constants';
-import { flipPiece, isValidPosition, placePiece, matrixToString, rotatePiece } from '../logic/gamelogic';
+import {
+  flipPiece,
+  isValidPosition,
+  placePiece,
+  matrixToString,
+  rotatePiece,
+  stringToMatrix,
+} from '../logic/gamelogic';
 
 const testPiece1 = {
   corners: [
@@ -176,6 +183,15 @@ describe('matrixToString', () => {
     const matrixString = matrixToString(testPiece1.matrix);
 
     expect(matrixString).toEqual('0,0,0,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0,1,0,0,0,0,0,0');
+  });
+});
+
+// Convert string to matrix
+describe('matrixToString', () => {
+  it('should convert a matrix to a string', () => {
+    const matrix = stringToMatrix('0,0,0,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0,1,0,0,0,0,0,0', testPiece1.matrix.length);
+
+    expect(matrix).toEqual(testPiece1.matrix);
   });
 });
 

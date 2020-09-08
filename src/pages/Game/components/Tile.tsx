@@ -9,19 +9,20 @@ import { PushpinOutlined } from '@ant-design/icons';
 // Other
 import { updateBoardRequest } from '../../../store/actions';
 import { PieceType, PLAYER_COLORS } from '../../../logic/gamelogic/constants';
-import { isValidInitialPosition, isValidPosition } from '../../../logic/gamelogic';
+import { isValidInitialPosition, isValidPosition, placePiece } from '../../../logic/gamelogic';
 
 type TileProps = {
   board: number[][];
   column: number;
   playerId: number;
+  roomName: string;
   row: number;
   selectedPiece?: PieceType;
   tileVal: number;
   turn: number;
 };
 
-const Tile: React.FC<TileProps> = ({ board, column, playerId, row, selectedPiece, tileVal, turn }) => {
+const Tile: React.FC<TileProps> = ({ board, column, playerId, roomName, row, selectedPiece, tileVal, turn }) => {
   const dispatch = useDispatch();
 
   const tileIsClickable = () => {
@@ -38,8 +39,10 @@ const Tile: React.FC<TileProps> = ({ board, column, playerId, row, selectedPiece
   };
 
   const onTileClick = () => {
-    console.log('clicked');
-    // dispatch(updateBoardRequest(""))
+    if (selectedPiece) {
+      const newBoard = placePiece(board, row, column, selectedPiece, playerId);
+      dispatch(updateBoardRequest(roomName, newBoard));
+    }
   };
 
   return (

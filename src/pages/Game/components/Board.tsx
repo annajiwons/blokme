@@ -11,26 +11,14 @@ import { isValidPosition } from '../../../logic/gamelogic';
 
 type BoardProps = {
   board: number[][];
-  corners: number[][];
   isPlayerTurn: boolean;
   playerId: number;
+  roomName: string;
   selectedPiece?: PieceType;
   turn: number;
 };
 
-const Board: React.FC<BoardProps> = ({ board, corners, isPlayerTurn, playerId, selectedPiece, turn }) => {
-  const tileIsClickable = (rowI: number, colI: number) => {
-    // if (!isPlayerTurn) {
-    //   return false;
-    // }
-    if (selectedPiece) {
-      return isValidPosition(board, rowI, colI, selectedPiece, playerId);
-    }
-    return false;
-  };
-
-  // TODO: make all not clickable, then watch selectedPiece var for changes
-  // if change occurs, then update only relevent tiles to be clickable
+const Board: React.FC<BoardProps> = ({ board, isPlayerTurn, playerId, roomName, selectedPiece, turn }) => {
   const renderBoard = () => {
     return board.map((row, rowI) => {
       return (
@@ -42,6 +30,7 @@ const Board: React.FC<BoardProps> = ({ board, corners, isPlayerTurn, playerId, s
                 column={colI}
                 key={`${rowI}-${colI}`}
                 playerId={playerId}
+                roomName={roomName}
                 row={rowI}
                 selectedPiece={selectedPiece}
                 tileVal={tile}

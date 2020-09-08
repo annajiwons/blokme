@@ -235,13 +235,6 @@ export const updateBoardLocal = (board: number[][]): GameActionTypes => {
   };
 };
 
-export const updateCorners = (corners: number[][]): GameActionTypes => {
-  return {
-    corners: corners,
-    type: UPDATE_CORNERS,
-  };
-};
-
 export const updateRequestResult = (successful: boolean): GameActionTypes => {
   return {
     successful: successful,

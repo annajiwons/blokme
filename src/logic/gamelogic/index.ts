@@ -57,22 +57,25 @@ export const matrixToString = (board: number[][]): string => {
   return board.map((row) => row.join()).join();
 };
 
-/**
- * Gets the initial valid corners to place pieces, depending on the player
- **/
-export const getInitialCorners = (playerId: number): number[][] => {
-  if (playerId === 1) {
-    return [[0, 0]];
-  } else if (playerId === 2) {
-    return [[BOARD_SIDE_LEN - 1, BOARD_SIDE_LEN - 1]];
+export const stringToMatrix = (boardStr: string, n: number): number[][] => {
+  const boardStrSplit = boardStr.split(',');
+  console.log(boardStrSplit);
+
+  const board = [];
+
+  let i = 0;
+  let inner = [];
+  for (const char of boardStrSplit) {
+    inner.push(parseInt(char));
+    i++;
+    if (i === n) {
+      board.push(inner);
+      inner = [];
+      i = 0;
+    }
   }
-  // TODO extend to four players?
-  // else if (playerId === 3) {
-  //   return [[0, BOARD_SIDE_LEN - 1]];
-  // } else if (playerId === 4) {
-  //   return [[BOARD_SIDE_LEN - 1, 0]];
-  // }
-  return [];
+
+  return board;
 };
 
 export const isValidInitialPosition = (playerId: number, selectedRow: number, selectedCol: number): boolean => {
@@ -229,18 +232,19 @@ export const placePiece = (
   piece: PieceType,
   playerId: number,
 ): number[][] => {
-  if (!isValidPosition(board, row, col, piece, playerId)) return board;
-
   const boardCopy = _.cloneDeep(board);
-  for (let pieceRow = 0; pieceRow < PIECE_SIDE_LEN; pieceRow++) {
-    for (let pieceCol = 0; pieceCol < PIECE_SIDE_LEN; pieceCol++) {
-      const boardRow = row + pieceRow - Math.floor(PIECE_SIDE_LEN / 2);
-      const boardCol = col + pieceCol - Math.floor(PIECE_SIDE_LEN / 2);
-      if (piece.matrix[pieceRow][pieceCol] === 0) {
-        continue; // Ignore, not actually part of piece
-      }
 
-      boardCopy[boardRow][boardCol] = playerId;
+  if (isValidPosition(board, row, col, piece, playerId)) {
+    for (let pieceRow = 0; pieceRow < PIECE_SIDE_LEN; pieceRow++) {
+      for (let pieceCol = 0; pieceCol < PIECE_SIDE_LEN; pieceCol++) {
+        const boardRow = row + pieceRow - Math.floor(PIECE_SIDE_LEN / 2);
+        const boardCol = col + pieceCol - Math.floor(PIECE_SIDE_LEN / 2);
+        if (piece.matrix[pieceRow][pieceCol] === 0) {
+          continue; // Ignore, not actually part of piece
+        }
+
+        boardCopy[boardRow][boardCol] = playerId;
+      }
     }
   }
 
