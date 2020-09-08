@@ -28,7 +28,6 @@ import {
 // Game
 const GAME_INITIAL_STATE: GameState = {
   board: INITIAL_BOARD,
-  corners: [],
   loading: false,
   pieces: INITIAL_PIECES,
   started: false,

@@ -18,7 +18,6 @@ import {
   RESET_TRIED_JOIN,
   SET_PLAYER_NAME,
   UPDATE_BOARD_LOCAL,
-  UPDATE_CORNERS,
   UPDATE_REQ_RESULT,
   GameActionTypes,
   GameState,

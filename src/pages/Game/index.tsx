@@ -82,6 +82,12 @@ const Game: React.FC<GameProps> = ({ match }) => {
     });
   }, []);
 
+  // useEffect(() => {
+  //   db.ref('rooms/' + roomName + '/board').on('value', (snapshot) => {
+  //     dispatch(startGameResult(snapshot.val()));
+  //   });
+  // }, []);
+
   // TODO add game updates
 
   // TODO: Fix loading
