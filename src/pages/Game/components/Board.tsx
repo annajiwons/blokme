@@ -1,5 +1,5 @@
 // Third Party
-import React from 'react';
+import React, { useEffect } from 'react';
 
 // Components
 import { CenterContainer, Table, TableBody, TableRow } from '../../../Visual/AppStyles';
@@ -15,17 +15,18 @@ type BoardProps = {
   isPlayerTurn: boolean;
   playerId: number;
   selectedPiece?: PieceType;
+  turn: number;
 };
 
-const Board: React.FC<BoardProps> = ({ board, corners, isPlayerTurn, playerId, selectedPiece }) => {
+const Board: React.FC<BoardProps> = ({ board, corners, isPlayerTurn, playerId, selectedPiece, turn }) => {
   const tileIsClickable = (rowI: number, colI: number) => {
-    if (!isPlayerTurn) {
-      return false;
-    }
+    // if (!isPlayerTurn) {
+    //   return false;
+    // }
     if (selectedPiece) {
-      // return isValidCorner(board, rowI, colI, selectedPiece, playerId);
+      return isValidPosition(board, rowI, colI, selectedPiece, playerId);
     }
-    return true; // TODO when no selected piece, try all leftover pieces in all orientations
+    return false;
   };
 
   // TODO: make all not clickable, then watch selectedPiece var for changes
@@ -35,7 +36,18 @@ const Board: React.FC<BoardProps> = ({ board, corners, isPlayerTurn, playerId, s
       return (
         <TableRow key={rowI} margin="0">
           {row.map((tile, colI) => {
-            return <Tile clickable={true} key={`${rowI}-${colI}`} tileVal={tile} />;
+            return (
+              <Tile
+                board={board}
+                column={colI}
+                key={`${rowI}-${colI}`}
+                playerId={playerId}
+                row={rowI}
+                selectedPiece={selectedPiece}
+                tileVal={tile}
+                turn={turn}
+              />
+            );
           })}
         </TableRow>
       );

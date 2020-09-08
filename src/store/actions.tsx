@@ -17,7 +17,9 @@ import {
   RES_START_GAME,
   RESET_TRIED_JOIN,
   SET_PLAYER_NAME,
+  UPDATE_BOARD_LOCAL,
   UPDATE_CORNERS,
+  UPDATE_REQ_RESULT,
   GameActionTypes,
   GameState,
   Player,
@@ -82,9 +84,12 @@ export const createRoom = (playerName: string): ThunkAction<void, RoomState, unk
 export const checkValidRoom = (roomName: string): ThunkAction<void, RoomState, unknown, RoomActionTypes> => {
   return async (dispatch: ThunkDispatch<RoomState, unknown, RoomActionTypes>): Promise<void> => {
     const roomSnapshot = await db.ref('rooms/' + roomName).once('value');
+    console.log(roomSnapshot.exists());
+    console.log(roomSnapshot.val());
     dispatch(
       checkValidRoomResult(
-        roomSnapshot.exists() && roomSnapshot.val().players.length < MAX_PLAYERS && !roomSnapshot.val().started
+        // _proto_ element included in players array, so subtract 1
+        roomSnapshot.exists() && roomSnapshot.val().players.length - 1 < MAX_PLAYERS && !roomSnapshot.val().started
           ? roomName
           : null,
       ),
@@ -191,6 +196,21 @@ export const startGame = (roomName: string): ThunkAction<void, GameState, unknow
   };
 };
 
+export const updateBoardRequest = (
+  roomName: string,
+  board: number[][],
+): ThunkAction<void, GameState, unknown, GameActionTypes> => {
+  return async (dispatch: ThunkDispatch<GameState, unknown, GameActionTypes>): Promise<void> => {
+    // First update board in local redux state
+    dispatch(updateBoardLocal(board));
+
+    // Update in firebase
+    dispatch(requestGameAction());
+    await db.ref('rooms/' + roomName).update({ board: matrixToString(board) });
+    dispatch(updateRequestResult(true)); // TODO update if unsuccesful
+  };
+};
+
 /*
   ===== GAME ACTIONS ======
 */
@@ -208,9 +228,23 @@ export const startGameResult = (started: boolean): GameActionTypes => {
   };
 };
 
+export const updateBoardLocal = (board: number[][]): GameActionTypes => {
+  return {
+    board: board,
+    type: UPDATE_BOARD_LOCAL,
+  };
+};
+
 export const updateCorners = (corners: number[][]): GameActionTypes => {
   return {
     corners: corners,
     type: UPDATE_CORNERS,
+  };
+};
+
+export const updateRequestResult = (successful: boolean): GameActionTypes => {
+  return {
+    successful: successful,
+    type: UPDATE_REQ_RESULT,
   };
 };

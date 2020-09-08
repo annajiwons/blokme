@@ -75,6 +75,15 @@ export const getInitialCorners = (playerId: number): number[][] => {
   return [];
 };
 
+export const isValidInitialPosition = (playerId: number, selectedRow: number, selectedCol: number): boolean => {
+  if (playerId === 1) {
+    return selectedRow === 0 && selectedCol === 0;
+  } else if (playerId === 2) {
+    return selectedRow === BOARD_SIDE_LEN - 1 && selectedCol === BOARD_SIDE_LEN - 1;
+  }
+  return false;
+};
+
 /**
  * Checks if the given coordinates is within the bounds of the board
  **/

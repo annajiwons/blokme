@@ -25,7 +25,7 @@ const PlayersCard: React.FC<PlayersCardProps> = ({ players, roomName }) => {
   };
 
   return (
-    <AntCard padding="5%">
+    <AntCard margin="0" padding="10%" width="100%">
       <Row justify="center">
         <H3>Room Code:</H3>
       </Row>

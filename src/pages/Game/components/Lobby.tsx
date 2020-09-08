@@ -22,7 +22,7 @@ const Lobby: React.FC<LobbyProps> = ({ players, roomName }) => {
   return (
     <>
       <CenterContainer>
-        <AntCard bordered={false}>
+        <AntCard bordered={false} margin="10%" padding="0" width="50%">
           <Row justify="center">
             <PlayersList players={players} roomName={roomName} />
           </Row>

@@ -320,15 +320,27 @@ export const PIECES: PieceType[] = [
   },
 ];
 
-export const INITIAL_BOARD = Array(BOARD_SIDE_LEN)
-  .fill(null)
-  .map(() => Array(BOARD_SIDE_LEN).fill(0));
+// TODO change back to below
+export const INITIAL_BOARD = [
+  [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+];
+
+// Array(BOARD_SIDE_LEN)
+//   .fill(null)
+//   .map(() => Array(BOARD_SIDE_LEN).fill(0));
 export const INITIAL_PIECES = Array.from(Array(PIECES.length).keys());
 
-export const PLAYER_COLORS = {
-  0: 'null',
-  1: MAIN_CYAN,
-  2: MAIN_GREEN,
-  3: MAIN_RED,
-  4: MAIN_YELLOW,
-};
+export const PLAYER_COLORS = ['null', MAIN_CYAN, MAIN_GREEN, MAIN_RED, MAIN_YELLOW];

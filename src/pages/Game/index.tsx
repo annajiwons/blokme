@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 
 // Components
-import { AntButton, AntCard, CenterContainer } from '../../Visual/AppStyles';
-import { Col, Row } from 'antd';
+import { AntButton, AntCard, CenterContainer, H3 } from '../../Visual/AppStyles';
+import { Badge, Col, Row } from 'antd';
 import Board from './components/Board';
 import Lobby from './components/Lobby';
 import PlayersList from './components/PlayersList';
@@ -52,20 +52,20 @@ const Game: React.FC<GameProps> = ({ match }) => {
   const [isRedirectToHome, setRedirectToHome] = useState(false);
   const [selectedPiece, setSelectedPiece] = useState<undefined | PieceType>(undefined);
 
-  // TODO uncomment
-  // useEffect(() => {
-  //   if (!roomName || !playerName) {
-  //     dispatch(clearRoomData());
-  //     setRedirectToHome(true);
-  //     // dispatch(checkValidRoom(match.params.roomName));
-  //   } else if (!!playerId) {
-  //     // this is the creator, don't want to join again
-  //   } else {
-  //     dispatch(joinRoom(playerName, roomName));
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (!roomName || !playerName) {
+      dispatch(clearRoomData());
+      setRedirectToHome(true);
+      // dispatch(checkValidRoom(match.params.roomName));
+    } else if (!!playerId) {
+      // this is the creator, don't want to join again
+      console.log('creator');
+    } else {
+      console.log('joining');
+      dispatch(joinRoom(playerName, roomName));
+    }
+  }, []);
 
-  // TODO remove and add to above
   useEffect(() => {
     dispatch(updateCorners(getInitialCorners(playerId)));
   }, []);
@@ -115,28 +115,37 @@ const Game: React.FC<GameProps> = ({ match }) => {
 
   return (
     <>
-      <Row align="middle" justify="space-around">
-        <Col span={8}>
-          <PlayerPieces pieceIds={pieces} selectedPiece={selectedPiece} setSelectedPiece={setSelectedPiece} />
-        </Col>
-        <Col span={16}>
-          <Board
-            board={board}
-            corners={corners}
-            isPlayerTurn={turn === playerId}
-            playerId={playerId}
-            selectedPiece={selectedPiece}
-          />
-        </Col>
-      </Row>
-
-      {/* {gameStarted ? (
+      {gameStarted ? (
         <>
-          <Board board={board} selectedPiece={selectedPiece} />
+          <Row align="middle" justify="space-around">
+            <Col span={14}>
+              <PlayerPieces
+                pieceIds={pieces}
+                playerId={playerId}
+                selectedPiece={selectedPiece}
+                setSelectedPiece={setSelectedPiece}
+              />
+            </Col>
+            <Col span={10}>
+              {playerId === turn ? (
+                <Badge status="success" text="Your Turn" />
+              ) : (
+                <Badge status="processing" text={`${players.get(turn)?.name}\'s Turn`} />
+              )}
+              <Board
+                board={board}
+                corners={corners}
+                isPlayerTurn={turn === playerId}
+                playerId={playerId}
+                selectedPiece={selectedPiece}
+                turn={turn}
+              />
+            </Col>
+          </Row>
         </>
       ) : (
         <Lobby players={players} roomName={roomName} />
-      )} */}
+      )}
     </>
   );
 };

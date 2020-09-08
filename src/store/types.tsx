@@ -76,7 +76,11 @@ export const REQ_GAME_ACTION = 'REQ_GAME_ACTION';
 
 export const RES_START_GAME = 'START_GAME';
 
+export const UPDATE_BOARD_LOCAL = 'UPDATE_BOARD_LOCAL';
+
 export const UPDATE_CORNERS = 'UPDATE_CORNERS';
+
+export const UPDATE_REQ_RESULT = 'UPDATE_REQ_RESULT';
 
 interface RequestGameAction {
   type: typeof REQ_GAME_ACTION;
@@ -87,12 +91,27 @@ interface ResultStartGameAction {
   type: typeof RES_START_GAME;
 }
 
+interface UpdateBoardAction {
+  board: number[][];
+  type: typeof UPDATE_BOARD_LOCAL;
+}
+
 interface UpdateCornersAction {
   corners: number[][];
   type: typeof UPDATE_CORNERS;
 }
 
-export type GameActionTypes = RequestGameAction | ResultStartGameAction | UpdateCornersAction;
+interface UpdateRequestResultAction {
+  successful: boolean;
+  type: typeof UPDATE_REQ_RESULT;
+}
+
+export type GameActionTypes =
+  | RequestGameAction
+  | ResultStartGameAction
+  | UpdateBoardAction
+  | UpdateCornersAction
+  | UpdateRequestResultAction;
 
 /* 
   STATE TYPES

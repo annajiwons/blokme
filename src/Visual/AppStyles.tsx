@@ -19,12 +19,14 @@ export const MAIN_RED = '#f5222d';
 export const MAIN_YELLOW = '#faad14';
 
 interface CommonProps {
+  readonly backgroundColor?: string;
   readonly border?: string;
   readonly borderRadius?: string;
   readonly fontWeight?: string;
   readonly height?: string;
   readonly margin?: string;
   readonly padding?: string;
+  readonly textAlign?: string;
   readonly width?: string;
 }
 interface BasicButtonProps extends ButtonProps, CommonProps {}
@@ -35,6 +37,7 @@ interface ClickableProps extends CommonProps {
 }
 
 export const AntButton: React.FC<BasicButtonProps> = styled(Button)<BasicButtonProps>`
+  background-color: ${(props) => props.backgroundColor};
   border: ${(props) => props.border};
   border-radius: ${(props) => props.borderRadius};
   height: ${(props) => (props.height ? props.height : 'auto')};
@@ -48,6 +51,7 @@ export const AntCard: React.FC<BasicCardProps> = styled(Card)<BasicCardProps>`
   .ant-card-body {
     padding: ${(props) => (props.padding ? props.padding : 'auto')};
   }
+  width: ${(props) => (props.width ? props.width : 'auto')};
 `;
 
 export const CenterContainer: React.FC = styled.div`
@@ -56,12 +60,21 @@ export const CenterContainer: React.FC = styled.div`
   justify-content: center;
 `;
 
-export const BasicButton: React.FC = styled.button<ClickableProps>``;
+export const Div: React.FC<CommonProps> = styled.div<CommonProps>`
+  background-color: ${(props) => props.backgroundColor};
+  border: ${(props) => props.border};
+  border-radius: ${(props) => props.borderRadius};
+  height: ${(props) => (props.height ? props.height : 'auto')};
+  margin: ${(props) => (props.margin ? props.margin : 'auto')};
+  padding: ${(props) => (props.padding ? props.padding : 'auto')};
+  width: ${(props) => (props.width ? props.width : 'auto')};
+`;
 
 export const H1: React.FC<CommonProps> = styled.h1<CommonProps>`
   font-family: Open Sans;
   font-weight: ${(props) => (props.fontWeight ? props.fontWeight : 'normal')};
   margin: ${(props) => (props.margin ? props.margin : 'auto')};
+  text-align: ${(props) => props.textAlign};
 `;
 
 export const H2: React.FC<CommonProps> = styled.h2<CommonProps>`
@@ -87,7 +100,7 @@ export const Table: React.FC<CommonProps> = styled.table<CommonProps>`
   border-collapse: collapse;
   height: ${(props) => (props.height ? props.height : 'auto')};
   margin: ${(props) => (props.margin ? props.margin : 'auto')};
-  table-layout: auto;
+  table-layout: fixed;
   width: ${(props) => (props.width ? props.width : 'auto')};
 `;
 
@@ -102,6 +115,7 @@ export const TableData: React.FC<CommonProps> = styled.td<CommonProps>`
   border: ${(props) => (props.border ? props.border : 'transparent')};
   border-collapse: collapse;
   height: ${(props) => (props.height ? props.height : 'auto')};
+  font-size: 1px;
   padding: ${(props) => (props.padding ? props.padding : 'auto')};
   white-space: nowrap;
   width: ${(props) => (props.width ? props.width : 'auto')};
