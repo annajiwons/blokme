@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 // 3rd Party
 import { db } from '../../firebase';
 import React, { useEffect, useState } from 'react';
@@ -9,7 +11,6 @@ import { H2, H3 } from '../../Visual/AppStyles';
 import { Badge, Col, Row, Modal } from 'antd';
 import Board from './components/Board';
 import Lobby from './components/Lobby';
-import PlayersList from './components/PlayersList';
 import PlayerPieces from './components/PlayerPieces';
 import { Redirect } from 'react-router-dom';
 
@@ -18,7 +19,7 @@ import {
   addPlayer,
   clearGameData,
   clearRoomData,
-  checkValidRoom,
+  // checkValidRoom,
   getScores,
   joinRoom,
   startGameResult,
@@ -28,7 +29,6 @@ import {
 import { BOARD_SIDE_LEN, PieceType } from '../../logic/gamelogic/constants';
 import { stringToMatrix } from '../../logic/gamelogic';
 import { RootState } from '../../store/reducers';
-import { Player } from '../../store/types';
 
 interface RouteInfo {
   roomName: string;
@@ -39,9 +39,9 @@ type GameProps = RouteComponentProps<RouteInfo>;
 const Game: React.FC<GameProps> = ({ match }) => {
   const dispatch = useDispatch();
 
-  // TODO if roomname in url, redirect to start page with room name filled in
   const board = useSelector((state: RootState) => state.game.board);
-  const checkedValidRoom = useSelector((state: RootState) => state.room.checkedValidRoom);
+  // TODO if roomname in url, redirect to start page with room name filled in
+  // const checkedValidRoom = useSelector((state: RootState) => state.room.checkedValidRoom);
   const gameStarted = useSelector((state: RootState) => state.game.started);
   const pieces = useSelector((state: RootState) => state.game.pieces);
   const playerId = useSelector((state: RootState) => state.room.playerId);
@@ -81,7 +81,7 @@ const Game: React.FC<GameProps> = ({ match }) => {
     db.ref('rooms/' + roomNameStr + '/players/' + playerIdStr)
       .onDisconnect()
       .remove();
-  }, [playerId, roomName]);
+  }, []);
 
   useEffect(() => {
     db.ref('rooms/' + roomName + '/players').on('value', (snapshot) => {
@@ -99,7 +99,7 @@ const Game: React.FC<GameProps> = ({ match }) => {
         dispatch(startGameResult(snapshot.val()));
       }
     });
-  }, []);
+  }, [roomName]);
 
   useEffect(() => {
     db.ref('rooms/' + roomName + '/board').on('value', (snapshot) => {
@@ -175,7 +175,7 @@ const Game: React.FC<GameProps> = ({ match }) => {
               {playerId === turn ? (
                 <Badge status="success" text="Your Turn" />
               ) : (
-                <Badge status="processing" text={`${players.get(turn)?.name}\'s Turn`} />
+                <Badge status="processing" text={`${players.get(turn)?.name}'s Turn`} />
               )}
               <Board
                 board={board}

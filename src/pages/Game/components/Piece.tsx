@@ -7,7 +7,6 @@ import { PushpinOutlined } from '@ant-design/icons';
 
 // Other
 import { PIECE_SIDE_LEN, PieceType, PLAYER_COLORS } from '../../../logic/gamelogic/constants';
-import { copyFile } from 'fs';
 
 type PieceProps = {
   piece: PieceType;

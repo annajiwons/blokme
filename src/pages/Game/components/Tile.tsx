@@ -8,8 +8,8 @@ import { PushpinOutlined } from '@ant-design/icons';
 
 // Other
 import { removePiece, updateBoardRequest, updateTurnRequest } from '../../../store/actions';
-import { MAX_PLAYERS, PieceType, PLAYER_COLORS } from '../../../logic/gamelogic/constants';
-import { getNextPlayerId, isValidInitialPosition, isValidPosition, placePiece } from '../../../logic/gamelogic';
+import { PieceType, PLAYER_COLORS } from '../../../logic/gamelogic/constants';
+import { isValidInitialPosition, isValidPosition, placePiece } from '../../../logic/gamelogic';
 
 type TileProps = {
   board: number[][];

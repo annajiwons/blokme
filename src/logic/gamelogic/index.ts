@@ -137,7 +137,6 @@ const touchesOwnCorner = (playerId: number, board: number[][], boardRow: number,
   if (isTileInBounds(boardRow - 1, boardCol - 1)) {
     // Top left
     if (board[boardRow - 1][boardCol - 1] === playerId) {
-      console.log('top left');
       return true;
     }
   }
@@ -145,7 +144,6 @@ const touchesOwnCorner = (playerId: number, board: number[][], boardRow: number,
   if (isTileInBounds(boardRow - 1, boardCol + 1)) {
     // Top right
     if (board[boardRow - 1][boardCol + 1] === playerId) {
-      console.log('topright');
       return true;
     }
   }
@@ -153,7 +151,6 @@ const touchesOwnCorner = (playerId: number, board: number[][], boardRow: number,
   if (isTileInBounds(boardRow + 1, boardCol - 1)) {
     // Bottom left
     if (board[boardRow + 1][boardCol - 1] === playerId) {
-      console.log('bot left');
       return true;
     }
   }
@@ -161,7 +158,6 @@ const touchesOwnCorner = (playerId: number, board: number[][], boardRow: number,
   if (isTileInBounds(boardRow + 1, boardCol + 1)) {
     // Bottom right
     if (board[boardRow + 1][boardCol + 1] === playerId) {
-      console.log('bot right');
       return true;
     }
   }
@@ -191,20 +187,20 @@ export const isValidPosition = (
 
       // 1. Piece must not go out of board
       if (!isTileInBounds(boardRow, boardCol)) {
-        console.log(`Piece goes out of bounds: ${boardRow}, ${boardCol} is not a valid coordinate`);
+        // console.log(`Piece goes out of bounds: ${boardRow}, ${boardCol} is not a valid coordinate`);
         return false;
       }
 
       // 2. Piece must not intersect with another piece
       if (board[boardRow][boardCol] !== 0) {
-        console.log('Piece intersects with another already on board');
+        // console.log('Piece intersects with another already on board');
         return false;
       }
 
       // 3. Piece must not result in its side touching the side of a previously played piece owned by
       //    the current player
       if (touchesOwnPiece(playerId, board, boardRow, boardCol)) {
-        console.log('Piece touches the side of own piece already placed');
+        // console.log('Piece touches the side of own piece already placed');
         return false;
       }
     }
@@ -214,16 +210,16 @@ export const isValidPosition = (
   //    Since it's already been checked that the piece doesn't touch the sides of a previous piece,
   //    just the four diagonal spaces need to be checked
   for (const coord of piece.corners) {
-    console.log(coord);
+    // console.log(coord);
     const boardRow = row + coord[0] - Math.floor(PIECE_SIDE_LEN / 2);
     const boardCol = col + coord[1] - Math.floor(PIECE_SIDE_LEN / 2);
 
-    console.log(`${boardRow},${boardCol}`);
+    // console.log(`${boardRow},${boardCol}`);
     if (touchesOwnCorner(playerId, board, boardRow, boardCol)) {
       return true;
     }
   }
-  console.log('Piece does not touch any existing corners');
+  // console.log('Piece does not touch any existing corners');
   return false;
 };
 

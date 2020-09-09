@@ -1,5 +1,5 @@
 // Third Party
-import React, { useEffect } from 'react';
+import React from 'react';
 
 // Components
 import { CenterContainer, Table, TableBody, TableRow } from '../../../Visual/AppStyles';
@@ -7,7 +7,6 @@ import Tile from './Tile';
 
 // Other
 import { PieceType } from '../../../logic/gamelogic/constants';
-import { isValidPosition } from '../../../logic/gamelogic';
 
 type BoardProps = {
   board: number[][];

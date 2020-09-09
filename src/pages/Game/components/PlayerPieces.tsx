@@ -5,14 +5,13 @@ import { useDispatch } from 'react-redux';
 // Components
 import { AntButton, AntCard } from '../../../Visual/AppStyles';
 import { Col, Divider, Row, Space } from 'antd';
-import { PushpinOutlined, RotateRightOutlined, SwapOutlined } from '@ant-design/icons';
+import { RotateRightOutlined, SwapOutlined } from '@ant-design/icons';
 import Piece from './Piece';
 
 // Other
-import { skipTurnRequest, updateTurnRequest } from '../../../store/actions';
-import { MAX_PLAYERS, PieceType, PIECES } from '../../../logic/gamelogic/constants';
+import { skipTurnRequest } from '../../../store/actions';
+import { PieceType, PIECES } from '../../../logic/gamelogic/constants';
 import { flipPiece, returnScore, rotatePiece } from '../../../logic/gamelogic';
-import { RootState } from '../../../store/reducers';
 
 type PlayerPiecesProps = {
   pieceIds: number[];

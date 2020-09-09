@@ -29,7 +29,7 @@ const Lobby: React.FC<LobbyProps> = ({ players, roomName }) => {
           <Divider />
           <Row justify="center">
             <AntButton
-              disabled={players.size != 2 && players.size != 4}
+              disabled={players.size !== 2 && players.size !== 4}
               onClick={() => {
                 dispatch(startGame(roomName));
               }}

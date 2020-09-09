@@ -97,8 +97,6 @@ export const REQ_GAME_ACTION = 'REQ_GAME_ACTION';
 
 export const RES_START_GAME = 'START_GAME';
 
-export const SKIP_TURN = 'SKIP_TURN';
-
 export const UPDATE_BOARD_LOCAL = 'UPDATE_BOARD_LOCAL';
 
 export const UPDATE_GAME_REQ_RESULT = 'UPDATE_GAME_REQ_RESULT';
@@ -123,12 +121,6 @@ interface ResultStartGameAction {
   type: typeof RES_START_GAME;
 }
 
-interface SkipTurnAction {
-  playerId: number;
-  roomName: string;
-  type: typeof SKIP_TURN;
-}
-
 interface UpdateBoardAction {
   board: number[][];
   type: typeof UPDATE_BOARD_LOCAL;
@@ -149,7 +141,6 @@ export type GameActionTypes =
   | RemovePieceAction
   | RequestGameAction
   | ResultStartGameAction
-  | SkipTurnAction
   | UpdateBoardAction
   | UpdateGameRequestResultAction
   | UpdateTurnAction;
