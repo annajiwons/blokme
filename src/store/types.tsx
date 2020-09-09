@@ -30,6 +30,10 @@ export const RES_JOIN_ROOM = 'RES_JOIN_ROOM';
 
 export const RESET_TRIED_JOIN = 'RESET_TRIED_JOIN';
 
+export const UPDATE_PLAYER_SCORE = 'UPDATE_PLAYER_SCORE';
+
+export const UPDATE_ROOM_REQ_RESULT = 'UPDATE_ROOM_REQ_RESULT';
+
 interface ClearRoomDataAction {
   type: typeof CLEAR_ROOM_DATA;
 }
@@ -58,6 +62,17 @@ interface ResetCheckedValidRoomAction {
   type: typeof RESET_TRIED_JOIN;
 }
 
+interface UpdatePlayerScore {
+  playerId: number;
+  score: number;
+  type: typeof UPDATE_PLAYER_SCORE;
+}
+
+interface UpdateRoomRequestResultAction {
+  successful: boolean;
+  type: typeof UPDATE_ROOM_REQ_RESULT;
+}
+
 export type RoomActionTypes =
   | AddPlayerAction
   | SetPlayerNameAction
@@ -66,11 +81,15 @@ export type RoomActionTypes =
   | ResultCreateRoomAction
   | ResultJoinRoomAction
   | ResultCheckedRoomAction
-  | ResetCheckedValidRoomAction;
+  | ResetCheckedValidRoomAction
+  | UpdatePlayerScore
+  | UpdateRoomRequestResultAction;
 
 /* 
   GAME ACTION TYPES
 */
+
+export const CLEAR_GAME_DATA = 'CLEAR_GAME_DATA';
 
 export const REMOVE_PIECE = 'REMOVE_PIECE';
 
@@ -78,11 +97,17 @@ export const REQ_GAME_ACTION = 'REQ_GAME_ACTION';
 
 export const RES_START_GAME = 'START_GAME';
 
+export const SKIP_TURN = 'SKIP_TURN';
+
 export const UPDATE_BOARD_LOCAL = 'UPDATE_BOARD_LOCAL';
 
-export const UPDATE_REQ_RESULT = 'UPDATE_REQ_RESULT';
+export const UPDATE_GAME_REQ_RESULT = 'UPDATE_GAME_REQ_RESULT';
 
 export const UPDATE_TURN_LOCAL = 'UPDATE_TURN_LOCAL';
+
+interface ClearGameData {
+  type: typeof CLEAR_GAME_DATA;
+}
 
 interface RemovePieceAction {
   pieceId: number;
@@ -98,14 +123,20 @@ interface ResultStartGameAction {
   type: typeof RES_START_GAME;
 }
 
+interface SkipTurnAction {
+  playerId: number;
+  roomName: string;
+  type: typeof SKIP_TURN;
+}
+
 interface UpdateBoardAction {
   board: number[][];
   type: typeof UPDATE_BOARD_LOCAL;
 }
 
-interface UpdateRequestResultAction {
+interface UpdateGameRequestResultAction {
   successful: boolean;
-  type: typeof UPDATE_REQ_RESULT;
+  type: typeof UPDATE_GAME_REQ_RESULT;
 }
 
 interface UpdateTurnAction {
@@ -114,11 +145,13 @@ interface UpdateTurnAction {
 }
 
 export type GameActionTypes =
+  | ClearGameData
   | RemovePieceAction
   | RequestGameAction
   | ResultStartGameAction
+  | SkipTurnAction
   | UpdateBoardAction
-  | UpdateRequestResultAction
+  | UpdateGameRequestResultAction
   | UpdateTurnAction;
 
 /* 
@@ -129,6 +162,7 @@ export type GameActionTypes =
 export interface Player {
   id: number;
   name: string;
+  score: number;
 }
 
 // Room

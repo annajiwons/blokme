@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 
 // Components
-import { AntButton, AntCard, CenterContainer, H3 } from '../../Visual/AppStyles';
-import { Badge, Col, Row } from 'antd';
+import { H2, H3 } from '../../Visual/AppStyles';
+import { Badge, Col, Row, Modal } from 'antd';
 import Board from './components/Board';
 import Lobby from './components/Lobby';
 import PlayersList from './components/PlayersList';
@@ -16,8 +16,10 @@ import { Redirect } from 'react-router-dom';
 // Other
 import {
   addPlayer,
+  clearGameData,
   clearRoomData,
   checkValidRoom,
+  getScores,
   joinRoom,
   startGameResult,
   updateBoardLocal,
@@ -51,17 +53,22 @@ const Game: React.FC<GameProps> = ({ match }) => {
   // const [isLoading, setLoading] = useState(true);
   const [isRedirectToHome, setRedirectToHome] = useState(false);
   const [selectedPiece, setSelectedPiece] = useState<undefined | PieceType>(undefined);
+  const [gameOver, setGameOver] = useState(false);
+
+  const clearDataAndGoToHome = () => {
+    dispatch(clearRoomData());
+    dispatch(clearGameData());
+    setRedirectToHome(true);
+  };
 
   useEffect(() => {
     if (!roomName || !playerName) {
-      dispatch(clearRoomData());
-      setRedirectToHome(true);
+      clearDataAndGoToHome();
       // dispatch(checkValidRoom(match.params.roomName));
     } else if (!!playerId) {
-      // this is the creator, don't want to join again
-      console.log('creator');
+      // Creator, don't want to join again
     } else {
-      console.log('joining');
+      console.log(`${playerName} is joining room: ${roomName}`);
       dispatch(joinRoom(playerName, roomName));
     }
   }, []);
@@ -110,6 +117,15 @@ const Game: React.FC<GameProps> = ({ match }) => {
     });
   }, []);
 
+  useEffect(() => {
+    db.ref('rooms/' + roomName + '/ended').on('value', (snapshot) => {
+      if (snapshot.exists() && snapshot.val()) {
+        dispatch(getScores(roomName));
+        setGameOver(true);
+      }
+    });
+  }, []);
+
   // TODO: Fix loading
   // useEffect(() => {
   //   if ((!roomName && checkedValidRoom) || !playerName) {
@@ -126,6 +142,20 @@ const Game: React.FC<GameProps> = ({ match }) => {
     return <Redirect to="/" />;
   }
 
+  const renderScores = () => {
+    return Array.from(players)
+      .sort((idPlayer1, idPlayer2) => idPlayer2[1].score - idPlayer1[1].score)
+      .map(([id, player], i) => {
+        return (
+          <Row key={id} justify="center">
+            <H2>
+              {i + 1}. {player.name}: {player.score}
+            </H2>
+          </Row>
+        );
+      });
+  };
+
   return (
     <>
       {gameStarted ? (
@@ -133,10 +163,12 @@ const Game: React.FC<GameProps> = ({ match }) => {
           <Row align="middle" justify="space-around">
             <Col span={14}>
               <PlayerPieces
+                roomName={roomName}
                 pieceIds={pieces}
                 playerId={playerId}
                 selectedPiece={selectedPiece}
                 setSelectedPiece={setSelectedPiece}
+                turn={turn}
               />
             </Col>
             <Col span={10}>
@@ -155,6 +187,15 @@ const Game: React.FC<GameProps> = ({ match }) => {
               />
             </Col>
           </Row>
+          <Modal onCancel={clearDataAndGoToHome} footer={null} visible={gameOver}>
+            <Row justify="center">
+              <H2 fontWeight="bold">Game Over!</H2>
+            </Row>
+            <Row justify="center">
+              <H3>Scores: </H3>
+            </Row>
+            {renderScores()}
+          </Modal>
         </>
       ) : (
         <Lobby players={players} roomName={roomName} />

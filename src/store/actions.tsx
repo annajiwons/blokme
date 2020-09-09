@@ -4,10 +4,11 @@ import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
 // Other
 import { INITIAL_BOARD, MAX_PLAYERS } from '../logic/gamelogic/constants';
-import { matrixToString } from '../logic/gamelogic';
+import { getNextPlayerId, matrixToString } from '../logic/gamelogic';
 import { generateRoomName, getUnusedPlayerId } from '../logic/roomlogic';
 import {
   ADD_PLAYER,
+  CLEAR_GAME_DATA,
   CLEAR_ROOM_DATA,
   REMOVE_PIECE,
   REQ_GAME_ACTION,
@@ -18,8 +19,11 @@ import {
   RES_START_GAME,
   RESET_TRIED_JOIN,
   SET_PLAYER_NAME,
+  SKIP_TURN,
   UPDATE_BOARD_LOCAL,
-  UPDATE_REQ_RESULT,
+  UPDATE_PLAYER_SCORE,
+  UPDATE_GAME_REQ_RESULT,
+  UPDATE_ROOM_REQ_RESULT,
   UPDATE_TURN_LOCAL,
   GameActionTypes,
   GameState,
@@ -70,11 +74,12 @@ export const createRoom = (playerName: string): ThunkAction<void, RoomState, unk
       inUse: true,
     });
 
-    const player: Player = { id: 1, name: playerName };
-
     // TODO: save player name, player number, room name in local storage so players can refresh
     await db.ref('rooms/' + roomName).set({
-      players: { 1: player },
+      ended: false,
+      numSkipped: 0,
+      players: { 1: { id: 1, name: playerName, score: 0 } },
+      totalPlayers: 1,
     });
 
     dispatch(createRoomResult(roomName));
@@ -90,7 +95,7 @@ export const checkValidRoom = (roomName: string): ThunkAction<void, RoomState, u
     dispatch(
       checkValidRoomResult(
         // _proto_ element included in players array, so subtract 1
-        roomSnapshot.exists() && roomSnapshot.val().players.length - 1 < MAX_PLAYERS && !roomSnapshot.val().started
+        roomSnapshot.exists() && roomSnapshot.val().totalPlayers < MAX_PLAYERS && !roomSnapshot.val().started
           ? roomName
           : null,
       ),
@@ -123,13 +128,13 @@ export const joinRoom = (
       return;
     }
 
-    const player: Player = { id: playerId, name: playerName };
+    const player: Player = { id: playerId, name: playerName, score: 0 };
 
-    // TODO fix this :)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const updates: any = {};
-    updates[playerId] = player;
+    updates[playerId] = { ...player };
     await db.ref('rooms/' + roomName + '/players').update(updates);
+    await db.ref('rooms/' + roomName).update({ totalPlayers: roomSnapshot.val().totalPlayers + 1 }); // TODO combine with above?
 
     roomSnapshot = await db.ref('rooms/' + roomName).once('value');
 
@@ -138,6 +143,19 @@ export const joinRoom = (
       // TODO show error to user
     }
     dispatch(joinRoomResult(player, roomName));
+  };
+};
+
+export const getScores = (roomName: string): ThunkAction<void, RoomState, unknown, RoomActionTypes> => {
+  return async (dispatch: ThunkDispatch<RoomState, unknown, RoomActionTypes>): Promise<void> => {
+    dispatch(requestRoomAction());
+    const playersSnapshot = await db.ref('rooms/' + roomName + '/players').once('value');
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    playersSnapshot.val().forEach((player: any) => {
+      dispatch(updatePlayerScore(player.id, player.score));
+    });
+    dispatch(updateRoomRequestResult(true)); // TODO update if unsuccesful
   };
 };
 
@@ -185,9 +203,54 @@ export const joinRoomResult = (player: Player, roomName: string): RoomActionType
   };
 };
 
+export const updatePlayerScore = (playerId: number, score: number): RoomActionTypes => {
+  return {
+    playerId: playerId,
+    score: score,
+    type: UPDATE_PLAYER_SCORE,
+  };
+};
+
+export const updateRoomRequestResult = (successful: boolean): RoomActionTypes => {
+  return {
+    successful: successful,
+    type: UPDATE_ROOM_REQ_RESULT,
+  };
+};
+
 /*
   ===== GAME THUNKS ======
 */
+
+export const skipTurnRequest = (
+  playerId: number,
+  roomName: string,
+  score: number,
+): ThunkAction<void, GameState, unknown, GameActionTypes> => {
+  return async (dispatch: ThunkDispatch<GameState, unknown, GameActionTypes>): Promise<void> => {
+    dispatch(requestGameAction());
+    const roomSnapshot = await db.ref('rooms/' + roomName).once('value');
+    const totalPlayers = roomSnapshot.val().totalPlayers;
+
+    let nextTurn = getNextPlayerId(playerId, totalPlayers);
+    let tried = 1;
+    while (roomSnapshot.val().players[nextTurn].skipped && tried < totalPlayers) {
+      nextTurn = getNextPlayerId(nextTurn, totalPlayers);
+      tried++;
+    }
+
+    dispatch(updateTurnLocal(nextTurn));
+
+    await db.ref('rooms/' + roomName + '/players/' + playerId).update({ score: score, skipped: true });
+    await db.ref('rooms/' + roomName).update({
+      ended: roomSnapshot.val().numSkipped + 1 === roomSnapshot.val().totalPlayers,
+      numSkipped: roomSnapshot.val().numSkipped + 1,
+      turn: nextTurn,
+    }); // TODO combine with above?
+
+    dispatch(updateGameRequestResult(true));
+  };
+};
 
 export const startGame = (roomName: string): ThunkAction<void, GameState, unknown, GameActionTypes> => {
   return async (dispatch: ThunkDispatch<GameState, unknown, GameActionTypes>): Promise<void> => {
@@ -208,28 +271,47 @@ export const updateBoardRequest = (
     // Update in firebase
     dispatch(requestGameAction());
     await db.ref('rooms/' + roomName).update({ board: matrixToString(board) });
-    dispatch(updateRequestResult(true)); // TODO update if unsuccesful
+    dispatch(updateGameRequestResult(true)); // TODO update if unsuccesful
   };
 };
 
 export const updateTurnRequest = (
   roomName: string,
-  nextTurn: number,
+  playerId: number,
 ): ThunkAction<void, GameState, unknown, GameActionTypes> => {
   return async (dispatch: ThunkDispatch<GameState, unknown, GameActionTypes>): Promise<void> => {
-    // First update turn in local redux state
+    dispatch(requestGameAction());
+    const roomSnapshot = await db.ref('rooms/' + roomName).once('value');
+    const totalPlayers = roomSnapshot.val().totalPlayers;
+
+    let nextTurn = getNextPlayerId(playerId, totalPlayers);
+    console.log(nextTurn);
+
+    let tried = 1;
+    while (roomSnapshot.val().players[nextTurn].skipped && tried < totalPlayers) {
+      nextTurn = getNextPlayerId(nextTurn, totalPlayers);
+      console.log(nextTurn);
+
+      tried++;
+    }
+    console.log(nextTurn);
+
     dispatch(updateTurnLocal(nextTurn));
 
-    // Update in firebase
-    dispatch(requestGameAction());
     await db.ref('rooms/' + roomName).update({ turn: nextTurn });
-    dispatch(updateRequestResult(true)); // TODO update if unsuccesful
+    dispatch(updateGameRequestResult(true)); // TODO update if unsuccesful
   };
 };
 
 /*
   ===== GAME ACTIONS ======
 */
+
+export const clearGameData = (): GameActionTypes => {
+  return {
+    type: CLEAR_GAME_DATA,
+  };
+};
 
 export const removePiece = (pieceId: number): GameActionTypes => {
   return {
@@ -258,10 +340,10 @@ export const updateBoardLocal = (board: number[][]): GameActionTypes => {
   };
 };
 
-export const updateRequestResult = (successful: boolean): GameActionTypes => {
+export const updateGameRequestResult = (successful: boolean): GameActionTypes => {
   return {
     successful: successful,
-    type: UPDATE_REQ_RESULT,
+    type: UPDATE_GAME_REQ_RESULT,
   };
 };
 

@@ -1,10 +1,11 @@
-import { INITIAL_BOARD, PieceType } from '../logic/gamelogic/constants';
+import { INITIAL_BOARD, PIECES, PieceType } from '../logic/gamelogic/constants';
 import {
   flipPiece,
   getNextPlayerId,
   isValidPosition,
   placePiece,
   matrixToString,
+  returnScore,
   rotatePiece,
   stringToMatrix,
 } from '../logic/gamelogic';
@@ -25,6 +26,7 @@ const testPiece1 = {
     [0, 0, 0, 1, 0],
     [0, 0, 0, 0, 0],
   ],
+  squares: 5,
 };
 
 const testPiece2 = {
@@ -42,6 +44,7 @@ const testPiece2 = {
     [0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0],
   ],
+  squares: 5,
 };
 
 const assertPieceEquals = (piece1: PieceType, piece2: PieceType) => {
@@ -74,6 +77,7 @@ describe('flipPiece', () => {
         [0, 1, 0, 0, 0],
         [0, 0, 0, 0, 0],
       ],
+      squares: 5,
     };
 
     assertPieceEquals(flippedPiece, testPiece1Flipped);
@@ -97,6 +101,7 @@ describe('flipPiece', () => {
         [0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0],
       ],
+      squares: 5,
     };
 
     assertPieceEquals(flippedPiece, testMatrix2Flipped);
@@ -124,6 +129,7 @@ describe('rotatePiece', () => {
         [0, 1, 1, 0, 0],
         [0, 0, 0, 0, 0],
       ],
+      squares: 5,
     };
 
     assertPieceEquals(rotatedPiece, testPiece1RotatedOnce);
@@ -146,6 +152,7 @@ describe('rotatePiece', () => {
         [0, 0, 1, 1, 0],
         [0, 0, 0, 0, 0],
       ],
+      squares: 5,
     };
 
     assertPieceEquals(rotatedPiece, testPiece1RotatedTwice);
@@ -168,6 +175,7 @@ describe('rotatePiece', () => {
         [0, 1, 0, 0, 0],
         [0, 0, 0, 0, 0],
       ],
+      squares: 5,
     };
 
     assertPieceEquals(rotatedPiece, testPiece1RotatedThrice);
@@ -467,12 +475,20 @@ describe('placePiece', () => {
   });
 });
 
-// Place piece on board
+// Get the next player's id
 describe('getNextPlayerId', () => {
   it("should get the next player's id", () => {
     expect(getNextPlayerId(1, 4)).toEqual(2);
     expect(getNextPlayerId(2, 4)).toEqual(3);
     expect(getNextPlayerId(3, 4)).toEqual(4);
     expect(getNextPlayerId(4, 4)).toEqual(1);
+  });
+});
+
+// Add up all squares
+describe('returnScore', () => {
+  it('should get the score based on the pieceIds provided', () => {
+    const expectedScore = -1 * (PIECES[0].squares + PIECES[1].squares + PIECES[2].squares);
+    expect(returnScore([0, 1, 2])).toEqual(expectedScore);
   });
 });

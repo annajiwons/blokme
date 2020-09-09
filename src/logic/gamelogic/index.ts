@@ -2,7 +2,7 @@
 import _ from 'lodash';
 
 // Other
-import { PieceType, BOARD_SIDE_LEN, PIECE_SIDE_LEN } from './constants';
+import { PieceType, BOARD_SIDE_LEN, PIECES, PIECE_SIDE_LEN } from './constants';
 
 /**
  * Flips the piece horizontally
@@ -25,7 +25,7 @@ export const flipPiece = (piece: PieceType): PieceType => {
     flippedCorners.push([coord[0], matrix[0].length - coord[1] - 1]);
   }
 
-  return { corners: flippedCorners, id: piece.id, matrix: flippedMatrix };
+  return { corners: flippedCorners, id: piece.id, matrix: flippedMatrix, squares: piece.squares };
 };
 
 /**
@@ -50,7 +50,7 @@ export const rotatePiece = (piece: PieceType): PieceType => {
   }
 
   // Then flip
-  return flipPiece({ corners: transposedCorners, id: piece.id, matrix: transposedMatrix });
+  return flipPiece({ corners: transposedCorners, id: piece.id, matrix: transposedMatrix, squares: piece.squares });
 };
 
 export const matrixToString = (board: number[][]): string => {
@@ -137,6 +137,7 @@ const touchesOwnCorner = (playerId: number, board: number[][], boardRow: number,
   if (isTileInBounds(boardRow - 1, boardCol - 1)) {
     // Top left
     if (board[boardRow - 1][boardCol - 1] === playerId) {
+      console.log('top left');
       return true;
     }
   }
@@ -144,6 +145,7 @@ const touchesOwnCorner = (playerId: number, board: number[][], boardRow: number,
   if (isTileInBounds(boardRow - 1, boardCol + 1)) {
     // Top right
     if (board[boardRow - 1][boardCol + 1] === playerId) {
+      console.log('topright');
       return true;
     }
   }
@@ -151,6 +153,7 @@ const touchesOwnCorner = (playerId: number, board: number[][], boardRow: number,
   if (isTileInBounds(boardRow + 1, boardCol - 1)) {
     // Bottom left
     if (board[boardRow + 1][boardCol - 1] === playerId) {
+      console.log('bot left');
       return true;
     }
   }
@@ -158,6 +161,7 @@ const touchesOwnCorner = (playerId: number, board: number[][], boardRow: number,
   if (isTileInBounds(boardRow + 1, boardCol + 1)) {
     // Bottom right
     if (board[boardRow + 1][boardCol + 1] === playerId) {
+      console.log('bot right');
       return true;
     }
   }
@@ -210,9 +214,11 @@ export const isValidPosition = (
   //    Since it's already been checked that the piece doesn't touch the sides of a previous piece,
   //    just the four diagonal spaces need to be checked
   for (const coord of piece.corners) {
+    console.log(coord);
     const boardRow = row + coord[0] - Math.floor(PIECE_SIDE_LEN / 2);
     const boardCol = col + coord[1] - Math.floor(PIECE_SIDE_LEN / 2);
 
+    console.log(`${boardRow},${boardCol}`);
     if (touchesOwnCorner(playerId, board, boardRow, boardCol)) {
       return true;
     }
@@ -255,4 +261,11 @@ export const placePiece = (
  **/
 export const getNextPlayerId = (currPlayerId: number, numPlayers: number): number => {
   return (currPlayerId % numPlayers) + 1;
+};
+
+/**
+ * Add up all the squares for the specified pieceIds to return the score
+ **/
+export const returnScore = (pieceIds: number[]): number => {
+  return -1 * pieceIds.map((id) => PIECES[id].squares).reduce((acc, curr) => acc + curr, 0);
 };

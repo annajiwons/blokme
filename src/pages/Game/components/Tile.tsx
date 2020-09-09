@@ -56,11 +56,8 @@ const Tile: React.FC<TileProps> = ({
       const newBoard = placePiece(board, row, column, selectedPiece, playerId);
       dispatch(updateBoardRequest(roomName, newBoard));
 
-      const nextPlayerId = getNextPlayerId(playerId, MAX_PLAYERS);
-      dispatch(updateTurnRequest(roomName, nextPlayerId));
+      dispatch(updateTurnRequest(roomName, playerId));
 
-      console.log(`selectedpiece id : `);
-      console.log(selectedPiece);
       dispatch(removePiece(selectedPiece.id));
       setSelectedPiece(undefined);
     }

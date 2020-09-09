@@ -22,15 +22,21 @@ const getRandomInt = (min: number, max: number): number => {
 };
 
 // Reducer Utils
+
+export const copyPlayerMap = (players: Map<number, Player>): Map<number, Player> => {
+  const newPlayers = new Map<number, Player>();
+  players.forEach((player, id) => {
+    newPlayers.set(id, player);
+  });
+  return newPlayers;
+};
+
 export const copyPlayerMapWithAdd = (
   players: Map<number, Player>,
   newId: number,
   newPlayer: Player,
 ): Map<number, Player> => {
-  const newPlayers = new Map<number, Player>();
-  players.forEach((player, id) => {
-    newPlayers.set(id, player);
-  });
+  const newPlayers = copyPlayerMap(players);
   newPlayers.set(newId, newPlayer);
   return newPlayers;
 };

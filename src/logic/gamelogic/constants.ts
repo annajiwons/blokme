@@ -8,6 +8,7 @@ export interface PieceType {
   corners: number[][];
   id: number;
   matrix: number[][];
+  squares: number;
 }
 export const PIECE_SIDE_LEN = 5;
 export const PIECES: PieceType[] = [
@@ -24,6 +25,7 @@ export const PIECES: PieceType[] = [
       [0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0],
     ],
+    squares: 4,
   },
   {
     corners: [
@@ -39,6 +41,7 @@ export const PIECES: PieceType[] = [
       [0, 0, 0, 1, 0],
       [0, 0, 0, 0, 0],
     ],
+    squares: 5,
   },
   {
     corners: [
@@ -54,6 +57,7 @@ export const PIECES: PieceType[] = [
       [0, 0, 1, 0, 0],
       [0, 0, 0, 0, 0],
     ],
+    squares: 5,
   },
   {
     corners: [
@@ -69,6 +73,7 @@ export const PIECES: PieceType[] = [
       [0, 0, 1, 0, 0],
       [0, 0, 0, 0, 0],
     ],
+    squares: 4,
   },
   {
     corners: [
@@ -85,6 +90,7 @@ export const PIECES: PieceType[] = [
       [0, 0, 1, 1, 0],
       [0, 0, 0, 0, 0],
     ],
+    squares: 5,
   },
   {
     corners: [
@@ -100,6 +106,7 @@ export const PIECES: PieceType[] = [
       [0, 0, 1, 0, 0],
       [0, 0, 1, 0, 0],
     ],
+    squares: 5,
   },
   {
     corners: [
@@ -116,13 +123,14 @@ export const PIECES: PieceType[] = [
       [0, 0, 1, 1, 0],
       [0, 0, 0, 0, 0],
     ],
+    squares: 5,
   },
   {
     corners: [
       [1, 2],
-      [3, 1],
-      [3, 3],
-      [4, 2],
+      [2, 1],
+      [2, 3],
+      [3, 2],
     ],
     id: 7,
     matrix: [
@@ -132,6 +140,7 @@ export const PIECES: PieceType[] = [
       [0, 0, 1, 0, 0],
       [0, 0, 0, 0, 0],
     ],
+    squares: 5,
   },
   {
     corners: [
@@ -147,6 +156,7 @@ export const PIECES: PieceType[] = [
       [0, 0, 1, 0, 0],
       [0, 0, 0, 0, 0],
     ],
+    squares: 4,
   },
   {
     corners: [
@@ -164,6 +174,7 @@ export const PIECES: PieceType[] = [
       [0, 0, 0, 1, 0],
       [0, 0, 0, 0, 0],
     ],
+    squares: 5,
   },
   {
     corners: [
@@ -179,6 +190,7 @@ export const PIECES: PieceType[] = [
       [0, 0, 1, 0, 0],
       [0, 0, 1, 0, 0],
     ],
+    squares: 5,
   },
   {
     corners: [
@@ -195,6 +207,7 @@ export const PIECES: PieceType[] = [
       [0, 0, 1, 0, 0],
       [0, 0, 0, 0, 0],
     ],
+    squares: 5,
   },
   {
     corners: [
@@ -211,6 +224,7 @@ export const PIECES: PieceType[] = [
       [0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0],
     ],
+    squares: 5,
   },
   {
     corners: [
@@ -227,6 +241,7 @@ export const PIECES: PieceType[] = [
       [0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0],
     ],
+    squares: 4,
   },
   {
     corners: [
@@ -242,6 +257,7 @@ export const PIECES: PieceType[] = [
       [0, 0, 1, 0, 0],
       [0, 0, 0, 0, 0],
     ],
+    squares: 3,
   },
   {
     corners: [
@@ -258,6 +274,7 @@ export const PIECES: PieceType[] = [
       [0, 1, 1, 0, 0],
       [0, 0, 0, 0, 0],
     ],
+    squares: 4,
   },
   {
     corners: [[2, 2]],
@@ -269,6 +286,7 @@ export const PIECES: PieceType[] = [
       [0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0],
     ],
+    squares: 1,
   },
   {
     corners: [
@@ -283,6 +301,7 @@ export const PIECES: PieceType[] = [
       [0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0],
     ],
+    squares: 5,
   },
   {
     corners: [
@@ -297,6 +316,7 @@ export const PIECES: PieceType[] = [
       [0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0],
     ],
+    squares: 3,
   },
   {
     corners: [
@@ -311,6 +331,7 @@ export const PIECES: PieceType[] = [
       [0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0],
     ],
+    squares: 2,
   },
   {
     corners: [
@@ -327,6 +348,7 @@ export const PIECES: PieceType[] = [
       [0, 1, 0, 1, 0],
       [0, 0, 0, 0, 0],
     ],
+    squares: 5,
   },
 ];
 
