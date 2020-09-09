@@ -1,13 +1,10 @@
 // 3rd Party
 import firebase from 'firebase';
 
-// Other
-import { API_KEY, AUTH_DOMAIN, DATABASE_URL } from './secrets';
-
 const firebaseConfig = {
-  apiKey: API_KEY,
-  authDomain: AUTH_DOMAIN,
-  databaseURL: DATABASE_URL,
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
 };
 
 firebase.initializeApp(firebaseConfig);

@@ -57,7 +57,6 @@ export const addPlayer = (player: Player): RoomActionTypes => {
 export const createRoom = (playerName: string): ThunkAction<void, RoomState, unknown, RoomActionTypes> => {
   return async (dispatch: ThunkDispatch<RoomState, unknown, RoomActionTypes>): Promise<void> => {
     dispatch(requestRoomAction());
-    console.log('here');
 
     // TODO: add max # tries
     let roomName: null | string = null;
