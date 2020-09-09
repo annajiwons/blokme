@@ -11,14 +11,16 @@ import { isValidPosition } from '../../../logic/gamelogic';
 
 type BoardProps = {
   board: number[][];
-  isPlayerTurn: boolean;
   playerId: number;
   roomName: string;
   selectedPiece?: PieceType;
+  setSelectedPiece: (
+    value: (PieceType | undefined) | ((prevVar: PieceType | undefined) => PieceType | undefined),
+  ) => void;
   turn: number;
 };
 
-const Board: React.FC<BoardProps> = ({ board, isPlayerTurn, playerId, roomName, selectedPiece, turn }) => {
+const Board: React.FC<BoardProps> = ({ board, playerId, roomName, selectedPiece, setSelectedPiece, turn }) => {
   const renderBoard = () => {
     return board.map((row, rowI) => {
       return (
@@ -33,6 +35,7 @@ const Board: React.FC<BoardProps> = ({ board, isPlayerTurn, playerId, roomName, 
                 roomName={roomName}
                 row={rowI}
                 selectedPiece={selectedPiece}
+                setSelectedPiece={setSelectedPiece}
                 tileVal={tile}
                 turn={turn}
               />

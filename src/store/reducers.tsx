@@ -8,6 +8,7 @@ import { copyPlayerMapWithAdd } from '../logic/roomlogic';
 import {
   ADD_PLAYER,
   CLEAR_ROOM_DATA,
+  REMOVE_PIECE,
   REQ_GAME_ACTION,
   REQ_ROOM_ACTION,
   RES_CHECK_ROOM,
@@ -37,6 +38,8 @@ const GAME_INITIAL_STATE: GameState = {
 
 const game = (state = GAME_INITIAL_STATE, action: GameActionTypes) => {
   switch (action.type) {
+    case REMOVE_PIECE:
+      return { ...state, pieces: state.pieces.filter((piece) => piece !== action.pieceId) };
     case REQ_GAME_ACTION:
       return { ...state, loading: true };
     case RES_START_GAME:

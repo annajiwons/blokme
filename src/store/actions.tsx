@@ -9,6 +9,7 @@ import { generateRoomName, getUnusedPlayerId } from '../logic/roomlogic';
 import {
   ADD_PLAYER,
   CLEAR_ROOM_DATA,
+  REMOVE_PIECE,
   REQ_GAME_ACTION,
   REQ_ROOM_ACTION,
   RES_CHECK_ROOM,
@@ -229,6 +230,13 @@ export const updateTurnRequest = (
 /*
   ===== GAME ACTIONS ======
 */
+
+export const removePiece = (pieceId: number): GameActionTypes => {
+  return {
+    pieceId: pieceId,
+    type: REMOVE_PIECE,
+  };
+};
 
 export const requestGameAction = (): GameActionTypes => {
   return {

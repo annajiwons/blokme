@@ -7,7 +7,7 @@ import { AntButton, DARK_BLUE, Div, TableData } from '../../../Visual/AppStyles'
 import { PushpinOutlined } from '@ant-design/icons';
 
 // Other
-import { updateBoardRequest, updateTurnRequest } from '../../../store/actions';
+import { removePiece, updateBoardRequest, updateTurnRequest } from '../../../store/actions';
 import { MAX_PLAYERS, PieceType, PLAYER_COLORS } from '../../../logic/gamelogic/constants';
 import { getNextPlayerId, isValidInitialPosition, isValidPosition, placePiece } from '../../../logic/gamelogic';
 
@@ -18,11 +18,24 @@ type TileProps = {
   roomName: string;
   row: number;
   selectedPiece?: PieceType;
+  setSelectedPiece: (
+    value: (PieceType | undefined) | ((prevVar: PieceType | undefined) => PieceType | undefined),
+  ) => void;
   tileVal: number;
   turn: number;
 };
 
-const Tile: React.FC<TileProps> = ({ board, column, playerId, roomName, row, selectedPiece, tileVal, turn }) => {
+const Tile: React.FC<TileProps> = ({
+  board,
+  column,
+  playerId,
+  roomName,
+  row,
+  selectedPiece,
+  setSelectedPiece,
+  tileVal,
+  turn,
+}) => {
   const dispatch = useDispatch();
 
   const tileIsClickable = () => {
@@ -46,7 +59,10 @@ const Tile: React.FC<TileProps> = ({ board, column, playerId, roomName, row, sel
       const nextPlayerId = getNextPlayerId(playerId, MAX_PLAYERS);
       dispatch(updateTurnRequest(roomName, nextPlayerId));
 
-      selectedPiece = undefined;
+      console.log(`selectedpiece id : `);
+      console.log(selectedPiece);
+      dispatch(removePiece(selectedPiece.id));
+      setSelectedPiece(undefined);
     }
   };
 

@@ -253,6 +253,6 @@ export const placePiece = (
 /**
  * Get the playerId of the next player
  **/
-export const getNextPlayerId = (currPlayerId: number, numPlayers: number) => {
+export const getNextPlayerId = (currPlayerId: number, numPlayers: number): number => {
   return (currPlayerId % numPlayers) + 1;
 };

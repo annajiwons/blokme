@@ -147,10 +147,10 @@ const Game: React.FC<GameProps> = ({ match }) => {
               )}
               <Board
                 board={board}
-                isPlayerTurn={turn === playerId}
                 playerId={playerId}
                 roomName={roomName}
                 selectedPiece={selectedPiece}
+                setSelectedPiece={setSelectedPiece}
                 turn={turn}
               />
             </Col>

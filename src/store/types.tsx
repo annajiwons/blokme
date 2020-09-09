@@ -72,6 +72,8 @@ export type RoomActionTypes =
   GAME ACTION TYPES
 */
 
+export const REMOVE_PIECE = 'REMOVE_PIECE';
+
 export const REQ_GAME_ACTION = 'REQ_GAME_ACTION';
 
 export const RES_START_GAME = 'START_GAME';
@@ -81,6 +83,11 @@ export const UPDATE_BOARD_LOCAL = 'UPDATE_BOARD_LOCAL';
 export const UPDATE_REQ_RESULT = 'UPDATE_REQ_RESULT';
 
 export const UPDATE_TURN_LOCAL = 'UPDATE_TURN_LOCAL';
+
+interface RemovePieceAction {
+  pieceId: number;
+  type: typeof REMOVE_PIECE;
+}
 
 interface RequestGameAction {
   type: typeof REQ_GAME_ACTION;
@@ -107,6 +114,7 @@ interface UpdateTurnAction {
 }
 
 export type GameActionTypes =
+  | RemovePieceAction
   | RequestGameAction
   | ResultStartGameAction
   | UpdateBoardAction
