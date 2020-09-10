@@ -1,4 +1,4 @@
-# Blokme
+# Blokme ![Blockme icon](public/favicon.ico)
 
 Play here: https://blokme.herokuapp.com/
 
