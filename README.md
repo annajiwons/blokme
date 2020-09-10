@@ -1,3 +1,21 @@
+# Blokme
+
+Play here: https://blokme.herokuapp.com/
+
+This is based off of the game [Blokus Duo](https://www.ultraboardgames.com/blokus/blokus-duo.php), but with a simplified scoring scheme: each square (not piece) that is not placed is -1 point.
+
+## Demo:
+
+![Demo Gif](screenshots/demo.gif)
+
+## Screenshots:
+![Start Screen](screenshots/start_screen.png)
+![Lobby](screenshots/lobby.png)
+![Game](screenshots/game.png)
+![End Game](screenshots/end_game.png)
+
+# Create React App
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
