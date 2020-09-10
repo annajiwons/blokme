@@ -177,6 +177,8 @@ export const isValidPosition = (
 ): boolean => {
   if (!isTileInBounds(row, col)) return false;
 
+  let piecePartInInitialPosition = false;
+
   for (let pieceRow = 0; pieceRow < PIECE_SIDE_LEN; pieceRow++) {
     for (let pieceCol = 0; pieceCol < PIECE_SIDE_LEN; pieceCol++) {
       const boardRow = row + pieceRow - Math.floor(PIECE_SIDE_LEN / 2);
@@ -203,10 +205,19 @@ export const isValidPosition = (
         // console.log('Piece touches the side of own piece already placed');
         return false;
       }
+
+      if (isValidInitialPosition(playerId, boardRow, boardCol)) {
+        piecePartInInitialPosition = true;
+      }
     }
   }
 
-  // 4. Piece must touch a corner of a previously played piece
+  // 4. If part of the piece is in an initial position and it's valid otherwise, it is a valid position
+  if (piecePartInInitialPosition) {
+    return true;
+  }
+
+  // 5. Piece must touch a corner of a previously played piece
   //    Since it's already been checked that the piece doesn't touch the sides of a previous piece,
   //    just the four diagonal spaces need to be checked
   for (const coord of piece.corners) {

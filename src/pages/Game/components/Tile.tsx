@@ -43,10 +43,7 @@ const Tile: React.FC<TileProps> = ({
       return false;
     }
     if (selectedPiece) {
-      return (
-        (tileVal === 0 && isValidInitialPosition(playerId, row, column)) ||
-        isValidPosition(board, row, column, selectedPiece, playerId)
-      );
+      return isValidPosition(board, row, column, selectedPiece, playerId);
     }
     return false;
   };

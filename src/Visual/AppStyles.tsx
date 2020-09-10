@@ -71,26 +71,22 @@ export const Div: React.FC<CommonProps> = styled.div<CommonProps>`
 `;
 
 export const H1: React.FC<CommonProps> = styled.h1<CommonProps>`
-  font-family: Open Sans;
   font-weight: ${(props) => (props.fontWeight ? props.fontWeight : 'normal')};
   margin: ${(props) => (props.margin ? props.margin : 'auto')};
   text-align: ${(props) => props.textAlign};
 `;
 
 export const H2: React.FC<CommonProps> = styled.h2<CommonProps>`
-  font-family: Open Sans;
   font-weight: ${(props) => (props.fontWeight ? props.fontWeight : 'normal')};
   margin: ${(props) => (props.margin ? props.margin : 'auto')};
 `;
 
 export const H3: React.FC<CommonProps> = styled.h3<CommonProps>`
-  font-family: Open Sans;
   font-weight: ${(props) => (props.fontWeight ? props.fontWeight : 'normal')};
   margin: ${(props) => (props.margin ? props.margin : 'auto')};
 `;
 
 export const H4: React.FC<CommonProps> = styled.h4<CommonProps>`
-  font-family: Open Sans;
   font-weight: ${(props) => (props.fontWeight ? props.fontWeight : 'normal')};
   margin: ${(props) => (props.margin ? props.margin : 'auto')};
 `;
